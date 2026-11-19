@@ -50,7 +50,7 @@ export default function HomePage() {
           <span className="part-note" data-home-reveal>KHANRI'AH / ABYSS / CELESTIA</span>
         </div>
         <figure className="part-artwork" data-home-art>
-          <CharacterArtwork name="Aether" src="/images/characters/aether.png" fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
+          <CharacterArtwork name="Aether" src="/images/characters/arlecchino.png" fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
           <figcaption>FIG. 02 / AETHER</figcaption>
         </figure>
       </div>

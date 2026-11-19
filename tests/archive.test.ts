@@ -26,7 +26,7 @@ test("artwork references exist and use raster extensions", () => {
   assert.ok(existsSync("public/images/placeholders/artwork.png"));
   for (const character of characters) {
     if (!character.artwork) continue;
-    assert.match(character.artwork, /^\/images\/.+\.(png|webp|avif|jpe?g)$/i);
+    assert.match(character.artwork, /^\/images\/.+\.(png|svg|webp|avif|jpe?g)$/i);
     assert.ok(existsSync(`public${character.artwork}`));
   }
 });
