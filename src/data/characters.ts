@@ -9,8 +9,8 @@ const roster: readonly RegionRoster[] = [
   ["Sumeru", "Akasha Pulses, the Kalpa Flame Rises", ["Alhaitham","Candace","Collei","Cyno","Dehya","Dori","Faruzan","Kaveh","Layla","Nahida","Nilou","Sethos","Tighnari","Wanderer"]],
   ["Fontaine", "Masquerade of the Guilty", ["Charlotte","Chevreuse","Chiori","Clorinde","Emilie","Escoffier","Freminet","Furina","Lynette","Lyney","Navia","Neuvillette","Sigewinne","Wriothesley"]],
   ["Natlan", "Flowers Resplendent on the Sun-Scorched Sojourn", ["Chasca","Citlali","Iansan","Ifa","Kachina","Kinich","Mavuika","Mualani","Ororon","Skirk","Varesa","Xilonen"]],
-  ["Nod-Krai", "Song of the Welkin Moon", ["Aino","Flins","Ineffa","Jahoda","Lauma","Nefer","Illuga","Linnea","Columbina Hyposelenia"]],
-  ["Snezhnaya", "The Tsaritsa and the Fatui", ["Tsaritsa","Danica","Alyosha","Arlecchino","Odette","Sandrone","Tartaglia","Vesna","Vodyanitsa"]],
+  ["Nod-Krai", "Song of the Welkin Moon", ["Columbina Hyposelenia","Aino","Flins","Ineffa","Jahoda","Lauma","Nefer","Illuga","Linnea"]],
+  ["Snezhnaya", "The Tsaritsa and the Fatui", ["Tsaritsa / Anastasiya Feodorovna Snezhnaya","Danica","Alyosha","Arlecchino","Odette","Sandrone","Tartaglia","Vesna","Vodyanitsa"]],
   ["Khaenri'ah", "Requiem of the Echoing Depths", ["Dainsleif"]]
 ];
 
@@ -34,6 +34,7 @@ const specialIds: Record<string, string> = {
   "Lan Yan": "lan-yan",
   "Yun Jin": "yun-jin",
   "Columbina Hyposelenia": "columbina",
+  "Tsaritsa / Anastasiya Feodorovna Snezhnaya": "tsaritsa",
 };
 
 const characterFacts: Record<string, { faction: string; story: string; element: string; weapon: string }> = {
@@ -216,7 +217,7 @@ const japaneseNames: Record<string, string> = {
   "Charlotte":"シャルロット","Chevreuse":"シュヴルーズ","Chiori":"千織","Clorinde":"クロリンデ","Emilie":"エミリエ","Escoffier":"エスコフィエ","Freminet":"フレミネ","Furina":"フリーナ","Lynette":"リネット","Lyney":"リネ","Navia":"ナヴィア","Neuvillette":"ヌヴィレット","Sigewinne":"シグウィン","Wriothesley":"リオセスリ",
   "Chasca":"チャスカ","Citlali":"シトラリ","Iansan":"イアンサン","Ifa":"イファ","Kachina":"カチーナ","Kinich":"キィニチ","Mavuika":"マーヴィカ","Mualani":"ムアラニ","Ororon":"オロロン","Skirk":"スカーク","Varesa":"ヴァレサ","Xilonen":"シロネン",
   "Aino":"アイノ","Flins":"フリンズ","Ineffa":"イネッファ","Jahoda":"ヤホダ","Lauma":"ラウマ","Nefer":"ネフェル","Illuga":"イルーガ","Linnea":"リンネア",
-  "Tsaritsa":"ツァリツァ","Danica":"ダニカ","Alyosha":"アリョーシャ","Arlecchino":"アルレッキーノ","Columbina Hyposelenia":"コロンビーナ","Odette":"オデット","Sandrone":"サンドロネ","Tartaglia":"タルタリヤ","Vesna":"ヴェスナ","Vodyanitsa":"ヴォジャニツァ",
+  "Tsaritsa / Anastasiya Feodorovna Snezhnaya":"ツァリツァ / アナスタシア・フェオドロヴナ・スネジナヤ","Danica":"ダニカ","Alyosha":"アリョーシャ","Arlecchino":"アルレッキーノ","Columbina Hyposelenia":"コロンビーナ","Odette":"オデット","Sandrone":"サンドロネ","Tartaglia":"タルタリヤ","Vesna":"ヴェスナ","Vodyanitsa":"ヴォジャニツァ",
   "Lumine":"蛍","Aether":"空","Paimon":"パイモン","Dainsleif":"ダインスレイヴ"
 };
 
@@ -230,7 +231,7 @@ function katakanaFallback(name: string) {
 const regionalCharacters: Character[] = roster.flatMap(([region, quest, names], regionIndex) =>
   names.map((name): Character | null => {
     const id = slug(name);
-    if (["lumine","aether","paimon","venti","zhongli","xiao","shogun","ayaka","nahida","cyno","furina","neuvillette","mavuika","kinich","lauma","flins","aino","tartaglia","arlecchino","dainsleif","columbina"].includes(id)) return null;
+    if (["lumine","aether","paimon","venti","zhongli","xiao","shogun","ayaka","nahida","cyno","furina","neuvillette","mavuika","kinich","lauma","flins","aino","tartaglia","arlecchino","dainsleif","columbina","tsaritsa"].includes(id)) return null;
     const notable = notableProfiles[name];
     return {
       id,
@@ -256,6 +257,7 @@ const regionalCharacters: Character[] = roster.flatMap(([region, quest, names], 
 );
 
 export const characters: Character[] = [
+  { id:"tsaritsa", name:"Tsaritsa / Anastasiya Feodorovna Snezhnaya", japanese:"ツァリツァ / アナスタシア・フェオドロヴナ・スネジナヤ", parts:["2"], vision:"Cryo", role:"Cryo Archon · Ruler of Snezhnaya", color:"#BBD4E5", background:"Anastasiya Feodorovna Snezhnaya, known as the Tsaritsa, is the Cryo Archon who leads Snezhnaya and directs the Fatui toward a challenge to the established divine order. Her change from divine sorrow to calculated opposition shapes the final direction of Teyvat's Archon Quest.", powers:"Cryo authority, national command, Gnosis pursuit and influence over the Fatui Harbingers.", relationships:["tartaglia","arlecchino","sandrone","lumine"], contracts:"Snezhnaya · The Fatui", artwork:"/images/characters/tsaritsa.png", region:"Snezhnaya", quest:"Chapter VII: Everwinter Without Mercy" },
   { id:"columbina", name:"Columbina Hyposelenia", japanese:"コロンビーナ", parts:["2"], vision:"Moon / Authority", role:"Former Fatui Harbinger · Moon-linked figure", color:"#B7BDD8", background:"Columbina is known for an enigmatic presence and a mysterious connection to moon and Abyssal forces. Her role in Nod-Krai is tied to the region's wider lunar crisis.", powers:"Moon-related manipulation and elusive supernatural power.", relationships:["lumine","paimon","lauma","flins"], contracts:"Nod-Krai · Moon-linked factions", artwork:"/images/characters/columbina.png", region:"Nod-Krai", quest:"Song of the Welkin Moon" },
  { id:"lumine", name:"Lumine", japanese:"蛍", parts:["1","2"], role:"Traveler · Mondstadt-to-Snezhnaya journey", color:"#E6C77A", background:"A star-traveling Descender separated from her twin at Teyvat's border. Lumine explores every nation, forms alliances and uncovers the rules hiding behind Celestia.", powers:"Elemental resonance, sword combat and regional exploration.", relationships:["aether","paimon","dainsleif","zhongli"], contracts:"Teyvat elemental resonance", artwork:"/images/characters/lumine.png", region:"Mondstadt", quest:"Song of the Dragon and Freedom", vision:"Elemental Resonance" },
   { id:"aether", name:"Aether", japanese:"空", parts:["1","2"], role:"Traveler · Mondstadt-to-Snezhnaya journey", color:"#E6C77A", background:"The twin of Lumine and the male Traveler selectable for the journey. Aether investigates Teyvat's wars while following clues about their lost shared path.", powers:"Sword combat and elemental resonance.", relationships:["lumine","paimon","dainsleif"], contracts:"Teyvat elemental resonance", artwork:"/images/characters/aether.png", region:"Mondstadt", quest:"Song of the Dragon and Freedom", vision:"Elemental Resonance" },

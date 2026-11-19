@@ -21,7 +21,29 @@ export function CharactersExplorer() {
   const selected = characters.find((item) => item.id === selectedId && item.region === region)
     ?? characters.find((item) => item.region === region)
     ?? characters[0];
-  const visible = characters.filter((item) => item.region === region);
+  const archonPriority: Record<string, string[]> = {
+    Mondstadt: ["venti"],
+    Liyue: ["zhongli"],
+    Inazuma: ["shogun"],
+    Sumeru: ["nahida"],
+    Fontaine: ["furina", "neuvillette"],
+    Natlan: ["mavuika"],
+    "Nod-Krai": ["columbina"],
+    Snezhnaya: ["tsaritsa"],
+  };
+  const visible = characters
+    .filter((item) => item.region === region)
+    .sort((a, b) => {
+      const priority = archonPriority[region] ?? [];
+      const aIndex = priority.indexOf(a.id);
+      const bIndex = priority.indexOf(b.id);
+      if (aIndex >= 0 || bIndex >= 0) {
+        if (aIndex < 0) return 1;
+        if (bIndex < 0) return -1;
+        return aIndex - bIndex;
+      }
+      return characters.indexOf(a) - characters.indexOf(b);
+    });
   const [classification, affiliation] = selected.role.split(" · ");
   usePanelMotion(root, "character", character);
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
