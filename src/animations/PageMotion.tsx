@@ -63,6 +63,7 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
         select(".part,.end").forEach((section: HTMLElement) => {
           const lines = section.querySelectorAll("[data-home-line]");
           const reveal = section.querySelectorAll("[data-home-reveal]");
+          const artwork = section.querySelector("[data-home-art]");
           const revealTimeline = gsap.timeline({
             paused: true,
             defaults: { ease: "power3.out" },
@@ -73,6 +74,44 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
           revealTimeline.fromTo(reveal, { y: 16, opacity: 0 }, {
             y: 0, opacity: 1, stagger: .035, duration: .58, clearProps: "transform,opacity",
           }, .08);
+          if (artwork) {
+            revealTimeline.fromTo(artwork, {
+              y: section.classList.contains("p2") ? 40 : 28,
+              x: section.classList.contains("p2") ? 45 : -45,
+              opacity: 0,
+              clipPath: section.classList.contains("p2")
+                ? "inset(0 100% 0 0)"
+                : "inset(0 0 0 100%)",
+            }, {
+              y: 0,
+              x: 0,
+              opacity: 1,
+              clipPath: "inset(0 0 0 0)",
+              duration: 1,
+              clearProps: "transform,opacity,clipPath",
+            }, .04);
+            revealTimeline.fromTo(section.querySelectorAll("[data-home-art] figcaption"), {
+              y: 12,
+              opacity: 0,
+            }, {
+              y: 0,
+              opacity: 1,
+              stagger: .08,
+              duration: .5,
+              clearProps: "transform,opacity",
+            }, .45);
+          }
+          revealTimeline.fromTo(section.querySelectorAll(".btn"), {
+            scale: .96,
+            y: 10,
+            opacity: 0,
+          }, {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: .55,
+            clearProps: "transform,opacity",
+          }, .28);
           ScrollTrigger.create({
             trigger: section,
             start: "top 88%",
@@ -104,10 +143,25 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
     media.add(motionQuery + " and (min-width: 761px)", () => {
       if (page !== "home") return;
       const hero = root.current?.querySelector(".hero");
-      if (!hero) return;
-      const scrollTrigger = { trigger: hero, start: "top top", end: "bottom top", scrub: .7 };
-      gsap.to(".hero .sun", { yPercent: -9, ease: "none", scrollTrigger });
-      gsap.to(".hero-artwork", { yPercent: 6, ease: "none", scrollTrigger });
+      if (hero) {
+        const scrollTrigger = { trigger: hero, start: "top top", end: "bottom top", scrub: .7 };
+        gsap.to(".hero .sun", { yPercent: -9, ease: "none", scrollTrigger });
+        gsap.to(".hero-artwork", { yPercent: 6, ease: "none", scrollTrigger });
+      }
+      root.current?.querySelectorAll<HTMLElement>(".part").forEach((section) => {
+        const artwork = section.querySelector<HTMLElement>("[data-home-art]");
+        if (artwork) gsap.to(artwork, {
+          yPercent: section.classList.contains("p2") ? 5 : -5,
+          ease: "none",
+          scrollTrigger: { trigger: section, start: "top bottom", end: "bottom top", scrub: 1 },
+        });
+      });
+      const endArtwork = root.current?.querySelector<HTMLElement>(".end-artwork");
+      if (endArtwork) gsap.to(endArtwork, {
+        yPercent: -7,
+        ease: "none",
+        scrollTrigger: { trigger: ".end", start: "top bottom", end: "bottom top", scrub: 1 },
+      });
     });
     let active = true;
     document.fonts.ready.then(() => { if (active) ScrollTrigger.refresh(); });
