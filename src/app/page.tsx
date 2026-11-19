@@ -9,7 +9,7 @@ export default function HomePage() {
     <section className="hero" id="hero">
       <div className="sun" aria-hidden="true" />
       <h1 className="d"><span className="t1">GENSHIN</span><span className="t2">IMPACT</span></h1>
-      <div className="hero-artwork" data-hero-art><CharacterArtwork name="Lumine" src="/images/characters/lumine.png" priority fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 58vw" /></div>
+      <div className="hero-artwork" data-hero-art><CharacterArtwork name="Genshin Impact" src="/images/placeholders/poster1_landing.jpeg" priority fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 58vw" /></div>
       <div className="hero-slash" aria-hidden="true" />
       <div className="hero-tagline">
         <p className="hero-tagline-main d">
