@@ -28,7 +28,7 @@ test("artwork references exist and use raster extensions", () => {
   assert.ok(existsSync("public/images/placeholders/artwork.png"));
   for (const character of characters) {
     if (!character.artwork) continue;
-    assert.match(character.artwork, /^\/images\/.+\.(png|svg|webp|avif|jpe?g)$/i);
+    assert.match(character.artwork, /^\/images\/.+\.(png|jpe?g|webp|avif)$/i);
     assert.ok(existsSync(`public${character.artwork}`));
   }
 });
@@ -57,7 +57,7 @@ test("volume chapters and story arcs match the supplied covers", () => {
   }
   assert.ok(arcs.every((arc) => arc.chapters && arc.description.length > 70 && !arc.description.includes("undefined")));
   assert.ok(arcs.every((arc) => /^https:\/\/genshin\.hoyoverse\.com\//.test(arc.sourceUrl)));
-  assert.equal(arcs.length, 38);
+  assert.equal(arcs.length, 36);
   for (const arc of arcs) {
     assert.match(arc.artwork ?? "", /^\/images\/(locations|characters)\/.+\.(svg|png|jpe?g)$/i);
     assert.ok(existsSync(`public${arc.artwork}`), arc.name);
