@@ -71,74 +71,90 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
           const lines = section.querySelectorAll("[data-home-line]");
           const reveal = section.querySelectorAll("[data-home-reveal]");
           const artwork = section.querySelector("[data-home-art]");
+          const inner = section.querySelector<HTMLElement>(".part-inner,.end-inner");
+          const split = section.classList.contains("p2") ? -24 : 24;
+
+          gsap.set(inner, { y: 32, scale: .985, opacity: 0 });
+          gsap.set(lines, {
+            y: split,
+            opacity: 0,
+            clipPath: "inset(0 0 100% 0)",
+          });
+          gsap.set(reveal, { y: 22, opacity: 0 });
+
           const revealTimeline = gsap.timeline({
             paused: true,
-            defaults: { ease: "power3.out" },
+            defaults: { ease: "expo.out" },
           });
-          revealTimeline.fromTo(lines, { y: section.classList.contains("p2") ? -24 : 24, opacity: 0, clipPath: "inset(0 0 100% 0)" }, {
-            y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .045, duration: .68, clearProps: "transform,opacity,clipPath",
-          }, 0);
-          revealTimeline.fromTo(reveal, { y: 16, opacity: 0 }, {
-            y: 0, opacity: 1, stagger: .035, duration: .58, clearProps: "transform,opacity",
-          }, .08);
-          revealTimeline.fromTo(section.querySelector(".part-inner,.end-inner"), {
-            y: 28,
-            scale: .985,
-            opacity: 0,
-          }, {
-            y: 0,
-            scale: 1,
-            opacity: 1,
-            duration: .9,
-            clearProps: "transform,opacity",
-          }, 0);
-          if (artwork) {
-            revealTimeline.fromTo(artwork, {
-              y: section.classList.contains("p2") ? 40 : 28,
-              x: section.classList.contains("p2") ? 45 : -45,
-              opacity: 0,
-              clipPath: section.classList.contains("p2")
-                ? "inset(0 100% 0 0)"
-                : "inset(0 0 0 100%)",
-            }, {
+          revealTimeline
+            .to(inner, { y: 0, scale: 1, opacity: 1, duration: .9, clearProps: "transform,opacity" }, 0)
+            .to(lines, {
               y: 0,
-              x: 0,
               opacity: 1,
-              clipPath: "inset(0 0 0 0)",
-              duration: 1,
+              clipPath: "inset(0 0 0% 0)",
+              stagger: .09,
+              duration: .82,
               clearProps: "transform,opacity,clipPath",
-            }, .04);
-            revealTimeline.fromTo(section.querySelectorAll("[data-home-art] figcaption"), {
-              y: 12,
-              opacity: 0,
-            }, {
+            }, .08)
+            .to(reveal, {
               y: 0,
               opacity: 1,
               stagger: .08,
-              duration: .5,
+              duration: .72,
               clearProps: "transform,opacity",
-            }, .45);
+            }, .18);
+          if (artwork) {
+            gsap.set(artwork, {
+              y: section.classList.contains("p2") ? 40 : 28,
+              x: section.classList.contains("p2") ? 45 : -45,
+              opacity: 0,
+              clipPath: section.classList.contains("p2") ? "inset(0 100% 0 0)" : "inset(0 0 0 100%)",
+            });
+            revealTimeline
+              .to(artwork, {
+                y: 0,
+                x: 0,
+                opacity: 1,
+                clipPath: "inset(0 0 0 0)",
+                duration: 1.15,
+                clearProps: "transform,opacity,clipPath",
+              }, .12)
+              .to(section.querySelectorAll("[data-home-art] figcaption"), {
+                y: 0,
+                opacity: 1,
+                stagger: .1,
+                duration: .6,
+                clearProps: "transform,opacity",
+              }, .58);
           }
-          revealTimeline.fromTo(section.querySelectorAll(".btn"), {
-            scale: .96,
-            y: 10,
-            opacity: 0,
-          }, {
+          gsap.set(section.querySelectorAll(".btn"), { scale: .94, y: 14, opacity: 0 });
+          revealTimeline.to(section.querySelectorAll(".btn"), {
             scale: 1,
             y: 0,
             opacity: 1,
-            duration: .55,
+            duration: .68,
             clearProps: "transform,opacity",
-          }, .28);
+          }, .3);
           ScrollTrigger.create({
             trigger: section,
-            start: "top 88%",
+            start: "top 82%",
+            end: "bottom 20%",
             once: true,
+            toggleActions: "play none none none",
             onEnter: (self) => {
               if (Math.abs(self.getVelocity()) > 1500) revealTimeline.progress(1);
               else revealTimeline.play();
             },
           });
+        });
+        const endFooter = select(".end-footer")[0];
+        if (endFooter) gsap.fromTo(endFooter, { y: 24, opacity: 0 }, {
+          y: 0,
+          opacity: 1,
+          duration: .8,
+          ease: "expo.out",
+          scrollTrigger: { trigger: endFooter, start: "top 95%", once: true, toggleActions: "play none none none" },
+          clearProps: "transform,opacity",
         });
       }
       ScrollTrigger.refresh();
