@@ -13,8 +13,8 @@ import styles from "./DevilsExplorer.module.css";
 type Category = "all" | Devil["type"];
 const categories: { value: Category; label: string }[] = [
   { value: "all", label: "ALL FILES" },
-  { value: "devil", label: "SOVEREIGNS" },
-  { value: "entity", label: "ENTITIES" },
+  { value: "devil", label: "DRAGONS" },
+  { value: "entity", label: "FORCES" },
 ];
 
 function Redaction({ children }: { children: string }) {
@@ -87,7 +87,6 @@ export function DevilsExplorer() {
           <div className={styles.dossierCopy}>
             <dl data-devil-copy><dt>THREAT</dt><dd>{selected.threat} <small>UNOFFICIAL RATING</small></dd><dt>IDENTITY / ASSOCIATION</dt><dd>{selected.contractor}</dd><dt>CLASSIFICATION</dt><dd>{selected.type.toUpperCase()}{selected.subcategory ? " · " + selected.subcategory : ""}</dd></dl>
             <p data-devil-copy>{selected.description.split("[redacted]")[0]}{selected.redacted && <Redaction key={selected.id}>{selected.redacted}</Redaction>}{selected.description.split("[redacted]")[1]}</p>
-            <p className={styles.note} data-devil-copy><Redaction key={selected.id + "-note"}>NOTE REDACTED</Redaction></p>
           </div>
           <DossierArtwork key={selected.id} file={selected} />
         </div>

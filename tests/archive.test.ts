@@ -36,8 +36,8 @@ test("artwork references exist and use raster extensions", () => {
 test("classified records have explicit types and local artwork paths", () => {
   assert.equal(new Set(devils.map((file) => file.id)).size, devils.length);
   assert.equal(devils.find((file) => file.id === "TE-001")?.type, "entity");
-  assert.equal(devils.find((file) => file.id === "TE-005")?.subcategory, "Ancient Dragon");
-  assert.equal(devils.find((file) => file.id === "TE-009")?.subcategory, "Pre-Human Powers");
+  assert.equal(devils.find((file) => file.id === "TE-010")?.subcategory, "Geo Dragon Sovereign Remnant");
+  assert.equal(devils.find((file) => file.id === "TE-016")?.subcategory, "Tsaritsa's Executive Council");
   for (const file of devils) {
     assert.ok(file.type === "devil" || file.type === "fiend" || file.type === "entity");
     if (!file.artwork) continue;

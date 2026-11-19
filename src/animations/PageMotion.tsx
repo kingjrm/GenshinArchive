@@ -43,6 +43,13 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
         const throughSplash = document.documentElement.dataset.csmReveal !== "1";
         const offset = throughSplash ? .24 : 0;
         gsap.to(".mq-track", { xPercent: -50, duration: 45, ease: "none", repeat: -1 });
+        gsap.fromTo(".mq", { clipPath: "inset(0 100% 0 0)" }, {
+          clipPath: "inset(0 0% 0 0)",
+          duration: .85,
+          ease: "power4.out",
+          scrollTrigger: { trigger: ".mq", start: "top 92%", once: true },
+          clearProps: "clipPath",
+        });
         const intro = gsap.timeline({ paused: true, defaults: { ease: "expo.out" } })
           .fromTo(".hero .sun", { scale: .65, opacity: 0 }, { scale: 1, opacity: 1, duration: .85, clearProps: "opacity" }, 0)
           .fromTo(".hero .t1", { y: -70, opacity: 0 }, { y: 0, opacity: 1, duration: .78, clearProps: "transform,opacity" }, offset)
@@ -74,6 +81,17 @@ export function PageMotion({ page, children }: { page: string; children: ReactNo
           revealTimeline.fromTo(reveal, { y: 16, opacity: 0 }, {
             y: 0, opacity: 1, stagger: .035, duration: .58, clearProps: "transform,opacity",
           }, .08);
+          revealTimeline.fromTo(section.querySelector(".part-inner,.end-inner"), {
+            y: 28,
+            scale: .985,
+            opacity: 0,
+          }, {
+            y: 0,
+            scale: 1,
+            opacity: 1,
+            duration: .9,
+            clearProps: "transform,opacity",
+          }, 0);
           if (artwork) {
             revealTimeline.fromTo(artwork, {
               y: section.classList.contains("p2") ? 40 : 28,

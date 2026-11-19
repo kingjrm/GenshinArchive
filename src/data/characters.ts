@@ -42,6 +42,48 @@ function slug(name: string) {
 
 const palette = ["#78A6A0","#C9A84C","#9A78C7","#A3C85C","#62BBD2","#EE7B35","#91B5C9","#BBD4E5","#5077A8"];
 
+const regionLore: Record<string, string> = {
+  "Mondstadt": "Mondstadt is the City of Freedom, protected by the ideals of the Anemo Archon Barbatos and watched over from the Knights of Favonius.",
+  "Liyue": "Liyue is the nation of contracts, where merchants, Adepti and the Geo Archon have shaped a harbor society founded on mutual obligation.",
+  "Inazuma": "Inazuma is the nation of eternity, an archipelago of tradition, resistance and ambition governed by Raiden Ei's pursuit of a changeless future.",
+  "Sumeru": "Sumeru is the nation of wisdom, spanning rainforest and desert, where the Akademiya and Lesser Lord Kusanali shape knowledge and dreams.",
+  "Fontaine": "Fontaine is the nation of justice, where court trials, performance and prophecy expose the hidden cost of Iudex Neuvillette's rule.",
+  "Natlan": "Natlan is the nation of Pyro, organized around tribal nations, the Sacred Flame and the Night Kingdom's long struggle against the Abyss.",
+  "Nod-Krai": "Nod-Krai is a contested frontier south of Snezhnaya, where moon-linked factions, the Lightkeepers and the Fatui meet on Teyvat's northern edge.",
+  "Snezhnaya": "Snezhnaya is the Cryo nation of the Tsaritsa, where the Fatui advance a national plan opposed to the present divine order.",
+  "Khaenri'ah": "Khaenri'ah was a human kingdom destroyed during Teyvat's cataclysm, preserved today through forbidden knowledge, the Abyss and its surviving descendants."
+};
+
+const notableProfiles: Record<string, { role: string; biography: string; powers: string }> = {
+  "Amber": { role:"Outrider · Knights of Favonius", biography:"The only remaining Outrider of the Knights of Favonius protects Mondstadt with optimism, gliding and sharp field awareness.", powers:"Pyro archery, Baron Bunny and swift reconnaissance." },
+  "Albedo": { role:"Chief Alchemist · Kreideprinz", biography:"Albedo studies life, art and Khemia for the Knights of Favonius, while privately tracing the origin of his own artificial existence.", powers:"Geo swordsmanship and Solar Isotoma transmutation." },
+  "Diluc": { role:"Dawn Winery · Unofficial Protector", biography:"Diluc returned from the darkness of the Fatui conflict to defend Mondstadt through his own intelligence network and winery wealth.", powers:"Claymore combat with Pyro energy." },
+  "Jean": { role:"Acting Grand Master · Knights of Favonius", biography:"Jean carries the daily burden of Mondstadt's governance, missions and protection while balancing diplomacy with her rigorous sense of duty.", powers:"Sword combat and Anemo healing." },
+  "Lisa": { role:"Knights Librarian · Witch", biography:"Lisa is a veteran mage who chose the Knights' library over the Akademiya's highest intellectual circles, watching Mondstadt from behind measured calm.", powers:"Electro spellcasting and chained rune attacks." },
+  "Klee": { role:"Spark Knight · Knights of Favonius", biography:"Klee's explosive creations repeatedly cause chaos in Mondstadt, but her innocence and ability to protect others keep her close to the Knights.", powers:"Catalyst Pyro bombs and mining magic." },
+  "Ganyu": { role:"Qixing Secretary · Half-Qilin Adeptus", biography:"Ganyu serves Liyue's Qixing across centuries, balancing her half-human, half-Adeptus identity with a deep wish to protect ordinary lives.", powers:"Cryo bow combat and adeptal charge attacks." },
+  "Hu Tao": { role:"Director · Wangsheng Funeral Parlor", biography:"Hu Tao directs Liyue's funeral affairs with theatrical humor and a serious understanding of remembrance, balance and the boundary of life.", powers:"Polearm combat with Pyro vitality exchange." },
+  "Keqing": { role:"Yuheng · Liyue Qixing", biography:"Keqing rejects blind dependence on the gods and leads Liyue through practical reform, decisive action and personal responsibility.", powers:"Electro sword teleportation and rapid slashes." },
+  "Raiden Shogun": { role:"Electro Archon · Eternity", biography:"Raiden Ei pursues eternity while a puppet body carries out the Vision Hunt Decree. Her eventual choice to question stillness reshapes Inazuma.", powers:"Electro polearm authority and Musou Isshin." },
+  "Yae Miko": { role:"Guuji · Grand Narukami Shrine", biography:"Yae Miko protects Narukami Island through wit, contracts and careful intervention while testing Ei's resolve and the nation of Inazuma.", powers:"Electro catalyst spells and kitsune familiars." },
+  "Nahida": { role:"Dendro Archon · Lesser Lord Kusanali", biography:"Nahida governs Sumeru through knowledge and dreams. Limited by confinement and public neglect, she builds influence through empathy and perception.", powers:"Dendro dream entry, sacred cognition and elemental authority." },
+  "Furina": { role:"Former Hydro Archon · Performer", biography:"Furina performed divinity for centuries while concealing her private humanity from Fontaine. Her sacrifice was essential to defeating the prophecy.", powers:"Hydro performance, summoning and dramatic control." },
+  "Neuvillette": { role:"Iudex · Hydro Dragon Sovereign", biography:"Neuvillette administers Fontaine's justice while recovering the authority lost to the Dragon Sovereigns in Teyvat's ancient history.", powers:"Hydro sovereign attacks and courtroom authority." },
+  "Mavuika": { role:"Pyro Archon · Sun Bearer", biography:"Mavuika leads Natlan's tribes through an inherited cycle of conflict, sacrifice and rebirth, carrying the Sacred Flame toward a protected future.", powers:"Pyro authority, Flamestrider combat and tribal coordination." },
+  "Columbina Hyposelenia": { role:"Former Fatui Harbinger · Moon-linked figure", biography:"Columbina is known for an enigmatic presence and a mysterious connection to moon and Abyssal forces. Her role in Nod-Krai is tied to the region's wider lunar crisis.", powers:"Moon-related manipulation and elusive supernatural power." },
+  "Arlecchino": { role:"Fourth Fatui Harbinger · The Knave", biography:"Arlecchino leads the House of the Hearth and raises its operatives under a strict code. Her goals separate her from the Fatui's conventional cruelty.", powers:"Pyro scythe combat and Blood-Debt Directive." },
+  "Tartaglia": { role:"Eleventh Fatui Harbinger · Childe", biography:"Tartaglia is a combat-driven Snezhnayan Harbinger whose Foul Legacy training and desire to fight shape both his enemies and allies.", powers:"Hydro bow and melee transformations." },
+  "Lauma": { role:"Frostmoon Scions · Moonchant leader", biography:"Lauma stands among Nod-Krai's moon-linked factions and defends the traditions of the Frostmoon Scions against political and supernatural pressure.", powers:"Dendro lunar ritual combat." },
+  "Flins": { role:"Lightkeeper · Nod-Krai", biography:"Flins guards Nod-Krai's northern frontier. His work connects the Lightkeepers' defensive duties with the region's hidden supernatural dangers.", powers:"Electro polearm combat and Lightkeeper authority." },
+  "Aino": { role:"Mechanic · Clink-Clank Krumkake", biography:"Aino is a young Nod-Krai inventor whose practical engineering combines with her direct understanding of local craft communities.", powers:"Hydro machinery and mechanical coordination." }
+};
+
+function detailedBackground(name: string, region: string, quest: string) {
+  const notable = notableProfiles[name];
+  if (notable) return `${notable.biography} ${regionLore[region] ?? `${region} is part of Teyvat's playable world.`} The profile is linked to ${quest}.`;
+  return `${name} is a playable Teyvat character from ${region}. ${regionLore[region] ?? ""} Their history, combat talents and story appearances are explored through the region's quests and the wider Traveler journey. This archive record is tied to ${quest}.`;
+}
+
 const japaneseNames: Record<string, string> = {
   "Albedo":"アルベド","Amber":"アンバー","Barbara":"バーバラ","Bennett":"ベネット","Dahlia":"ダリア","Diluc":"ディルック","Diona":"ディオナ","Durin":"ドゥリン","Eula":"エウルア","Fischl":"フィッシュル","Jean":"ジン","Kaeya":"ガイア","Klee":"クレー","Lisa":"リサ","Lohen":"ローヒェン","Mika":"ミカ","Mona":"モナ","Nicole":"ニコ","Noelle":"ノエル","Prune":"プルーン","Razor":"レザー","Rosaria":"ロサリア","Sucrose":"スクロース","Varka":"ヴァルカ","Venti":"ウェンティ",
   "Baizhu":"白朮","Beidou":"北斗","Chongyun":"重雲","Gaming":"嘉明","Ganyu":"甘雨","Hu Tao":"胡桃","Keqing":"刻晴","Lan Yan":"藍硯","Ningguang":"凝光","Qiqi":"七七","Shenhe":"申鶴","Xiangling":"香菱","Xianyun":"閑雲","Xiao":"魈","Xingqiu":"行秋","Xinyan":"辛炎","Yanfei":"煙緋","Yaoyao":"瑶瑶","Yelan":"夜蘭","Yun Jin":"雲菫","Zhongli":"鍾離","Zibai":"兹白",
@@ -65,15 +107,16 @@ const regionalCharacters: Character[] = roster.flatMap(([region, quest, names], 
   names.map((name): Character | null => {
     const id = slug(name);
     if (["lumine","aether","paimon","venti","zhongli","xiao","shogun","ayaka","nahida","cyno","furina","neuvillette","mavuika","kinich","lauma","flins","aino","tartaglia","arlecchino","dainsleif","columbina"].includes(id)) return null;
+    const notable = notableProfiles[name];
     return {
       id,
       name,
       japanese: japaneseNames[name] ?? katakanaFallback(name),
       parts: regionIndex < 6 ? ["1" as const] : ["2" as const],
-      role: `Playable character · ${region}`,
+      role: notable?.role ?? `Playable character · ${region}`,
       color: palette[regionIndex],
-      background: `${name} of ${region}. Playable profile, elemental affinity, weapon and story appearances are recorded in the Genshin Impact Character Archive.`,
-      powers: "Combat abilities, elemental skill and burst are defined by the character's official in-game talent records.",
+      background: detailedBackground(name, region, quest),
+      powers: notable?.powers ?? `Combat abilities, elemental skill and burst are defined by ${name}'s official in-game talent records. ${name}'s role in ${region} is reflected in the associated story, local factions and regional exploration records.`,
       relationships: ["lumine", "paimon"].filter((related) => related !== id),
       contracts: region,
       artwork: svgFallbacks.has(id)
