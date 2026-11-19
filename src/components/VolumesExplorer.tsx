@@ -55,11 +55,12 @@ export function VolumesExplorer() {
         <div className={styles.number} data-volume-label>REGION {String(volume).padStart(2, "0")}</div>
         <h2 className={styles.title} aria-live="polite">{["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"][volume - 1]}</h2>
         <dl className={styles.details}>
-          <div><dt>STORY FOCUS</dt><dd>{selected.chapters ?? "Not available"}</dd></div>
+          <div><dt>NATION</dt><dd>{selected.title ?? ["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"][volume - 1]}</dd></div>
+          <div><dt>ARCHON QUEST</dt><dd>{selected.chapters ?? "Not available"}</dd></div>
           <div><dt>STORY CHAPTERS</dt><dd>{relatedArcs.length ? relatedArcs.map((arc) => <TransitionLink key={arc.name} href="/arcs" className={styles.arcLink} onClick={() => setArc(arcs.indexOf(arc))}>{arc.name}</TransitionLink>) : "Open the story chapter index"}</dd></div>
           {selected.publishedInJapan && <div><dt>EXPLORE</dt><dd>{selected.sourceUrl ? <a className={styles.sourceLink} href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.publishedInJapan}<span className="sr-only"> (opens official source in a new tab)</span></a> : selected.publishedInJapan}</dd></div>}
         </dl>
-        <p className={styles.context}>{selected.part === "1" ? "Primary Archon Quest region" : "Later journey region"} · Region and story connections.</p>
+        <p className={styles.context}>{selected.summary ?? "Region and story connections."}</p>
         <div className={styles.controls}>
           <button disabled={volume === 1} onClick={() => choose(volume - 1)} aria-label="Previous volume"><ArrowLeft size={18} aria-hidden="true" /> PREV</button>
           <button disabled={volume === volumes.length} onClick={() => choose(volume + 1)} aria-label="Next volume">NEXT <ArrowRight size={18} aria-hidden="true" /></button>

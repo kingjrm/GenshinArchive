@@ -14,12 +14,7 @@ import { PageHeading } from "./PageHeading";
 import { TransitionLink } from "./TransitionLink";
 import styles from "./LocationsExplorer.module.css";
 
-const locationAliases: Record<string, string> = {
-  "Denji’s apartment": "Denji’s Home",
-  Hotel: "The Hotel",
-  "High school": "Academy",
-  School: "Academy",
-};
+const locationAliases: Record<string, string> = {};
 
 export function LocationsExplorer() {
   const { setArc } = useArchive();
@@ -138,7 +133,7 @@ export function LocationsExplorer() {
             </div>
             <div className={styles.related} data-location-copy>
               <div><h3>CONNECTED PEOPLE</h3><div>{location.characters.map((id) => <CharacterLink key={id} id={id}>{characters.find((item) => item.id === id)!.name}<ArrowUpRight size={13} aria-hidden="true" /></CharacterLink>)}</div></div>
-              <div><h3>STORY ARCS</h3><div>{related.length ? related.map(({ arc, arcIndex }) => <TransitionLink key={arc.name} href="/arcs" onClick={() => setArc(arcIndex)}>{arc.name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink>) : <span>NO LINKED ARC FILE</span>}</div></div>
+              <div><h3>ARCHON QUESTS</h3><div>{related.length ? related.map(({ arc, arcIndex }) => <TransitionLink key={arc.name} href="/arcs" onClick={() => setArc(arcIndex)}>{arc.name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink>) : <span>NO LINKED QUEST FILE</span>}</div></div>
             </div>
           </div>
         </article>;

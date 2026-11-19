@@ -20,7 +20,7 @@ export function VolumeCover({ volume, featured = false }: { volume: Volume; feat
       onError={() => setFailed(true)}
     />
     {pending && <div className={styles.pending} aria-hidden="true">
-      <span>GENSHIN IMPACT / {String(volume.number).padStart(2, "0")}</span>
+      <span>{volume.title?.toUpperCase() ?? "GENSHIN IMPACT"} / {String(volume.number).padStart(2, "0")}</span>
       <strong>COVER<br />PENDING</strong>
       <span>ARTWORK NOT PROVIDED</span>
     </div>}

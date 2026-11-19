@@ -167,8 +167,16 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   useGSAP(() => {
     setMenuOpen(false);
     setProfile(null);
-    if (!pending.current) return;
+    transition.current?.kill();
+    const startedTransition = pending.current;
     pending.current = false;
+    gsap.set(["#wp", "#wk"], { clipPath: wipe.end, pointerEvents: "none" });
+    if (!startedTransition) {
+      window.scrollTo({ top: 0, behavior: "instant" });
+      lenis.current?.resize();
+      root.current?.querySelector<HTMLElement>("main")?.focus({ preventScroll: true });
+      return;
+    }
     if (lenis.current) lenis.current.scrollTo(0, { immediate: true });
     else window.scrollTo({ top: 0, behavior: "instant" });
     lenis.current?.resize();
@@ -180,6 +188,17 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
       .to("#wk", { clipPath: wipe.end, duration: reduced ? 0 : .55, ease: "power4.inOut" }, .15);
   }, { scope: root, dependencies: [pathname], revertOnUpdate: true });
 
+  useEffect(() => {
+    const clearStaleTransition = () => {
+      pending.current = false;
+      transition.current?.kill();
+      gsap.set(["#wp", "#wk"], { clipPath: wipe.end, pointerEvents: "none" });
+      lenis.current?.start();
+    };
+    window.addEventListener("popstate", clearStaleTransition);
+    return () => window.removeEventListener("popstate", clearStaleTransition);
+  }, []);
+
   const navigate = (href: string) => contextSafe(() => {
     setMenuOpen(false);
     setProfile(null);
@@ -187,6 +206,13 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
     pending.current = true;
     transition.current?.kill();
     const reduced = !matchMedia(motionQuery).matches;
+    window.setTimeout(() => {
+      if (!pending.current) return;
+      pending.current = false;
+      transition.current?.kill();
+      gsap.set(["#wp", "#wk"], { clipPath: wipe.end, pointerEvents: "none" });
+      lenis.current?.start();
+    }, 4000);
     transition.current = gsap.timeline({ onComplete: () => router.push(href) })
       .set(["#wp", "#wk"], { pointerEvents: "auto" })
       .fromTo("#wp", { clipPath: wipe.start }, { clipPath: wipe.full, duration: reduced ? 0 : .5, ease: "power4.inOut" })

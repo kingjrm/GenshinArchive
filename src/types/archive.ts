@@ -61,6 +61,9 @@ export interface Volume {
   cover: string | null;
   publishedInJapan?: string;
   sourceUrl?: string;
+  title?: string;
+  region?: string;
+  summary?: string;
 }
 export interface NavigationItem {
   href: string;
