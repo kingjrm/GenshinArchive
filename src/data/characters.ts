@@ -42,6 +42,25 @@ function slug(name: string) {
 
 const palette = ["#78A6A0","#C9A84C","#9A78C7","#A3C85C","#62BBD2","#EE7B35","#91B5C9","#BBD4E5","#5077A8"];
 
+const japaneseNames: Record<string, string> = {
+  "Albedo":"アルベド","Amber":"アンバー","Barbara":"バーバラ","Bennett":"ベネット","Dahlia":"ダリア","Diluc":"ディルック","Diona":"ディオナ","Durin":"ドゥリン","Eula":"エウルア","Fischl":"フィッシュル","Jean":"ジン","Kaeya":"ガイア","Klee":"クレー","Lisa":"リサ","Lohen":"ローヒェン","Mika":"ミカ","Mona":"モナ","Nicole":"ニコ","Noelle":"ノエル","Prune":"プルーン","Razor":"レザー","Rosaria":"ロサリア","Sucrose":"スクロース","Varka":"ヴァルカ","Venti":"ウェンティ",
+  "Baizhu":"白朮","Beidou":"北斗","Chongyun":"重雲","Gaming":"嘉明","Ganyu":"甘雨","Hu Tao":"胡桃","Keqing":"刻晴","Lan Yan":"藍硯","Ningguang":"凝光","Qiqi":"七七","Shenhe":"申鶴","Xiangling":"香菱","Xianyun":"閑雲","Xiao":"魈","Xingqiu":"行秋","Xinyan":"辛炎","Yanfei":"煙緋","Yaoyao":"瑶瑶","Yelan":"夜蘭","Yun Jin":"雲菫","Zhongli":"鍾離","Zibai":"兹白",
+  "Arataki Itto":"荒瀧一斗","Gorou":"ゴロー","Kaedehara Kazuha":"楓原万葉","Kamisato Ayaka":"神里綾華","Kamisato Ayato":"神里綾人","Kirara":"綺良々","Kujou Sara":"九条裟羅","Kuki Shinobu":"久岐忍","Raiden Shogun":"雷電将軍","Sangonomiya Kokomi":"珊瑚宮心海","Sayu":"早柚","Shikanoin Heizou":"鹿野院平蔵","Thoma":"トーマ","Yae Miko":"八重神子","Yoimiya":"宵宮","Yumemizuki Mizuki":"夢見月瑞希",
+  "Alhaitham":"アルハイゼン","Candace":"キャンディス","Collei":"コレイ","Cyno":"セノ","Dehya":"ディシア","Dori":"ドリー","Faruzan":"ファルザン","Kaveh":"カーヴェ","Layla":"レイラ","Nahida":"ナヒーダ","Nilou":"ニィロウ","Sethos":"セトス","Tighnari":"ティナリ","Wanderer":"放浪者",
+  "Charlotte":"シャルロット","Chevreuse":"シュヴルーズ","Chiori":"千織","Clorinde":"クロリンデ","Emilie":"エミリエ","Escoffier":"エスコフィエ","Freminet":"フレミネ","Furina":"フリーナ","Lynette":"リネット","Lyney":"リネ","Navia":"ナヴィア","Neuvillette":"ヌヴィレット","Sigewinne":"シグウィン","Wriothesley":"リオセスリ",
+  "Chasca":"チャスカ","Citlali":"シトラリ","Iansan":"イアンサン","Ifa":"イファ","Kachina":"カチーナ","Kinich":"キィニチ","Mavuika":"マーヴィカ","Mualani":"ムアラニ","Ororon":"オロロン","Skirk":"スカーク","Varesa":"ヴァレサ","Xilonen":"シロネン",
+  "Aino":"アイノ","Flins":"フリンズ","Ineffa":"イネッファ","Jahoda":"ヤホダ","Lauma":"ラウマ","Nefer":"ネフェル","Illuga":"イルーガ","Linnea":"リンネア",
+  "Tsaritsa":"ツァリツァ","Danica":"ダニカ","Alyosha":"アリョーシャ","Arlecchino":"アルレッキーノ","Columbina Hyposelenia":"コロンビーナ","Odette":"オデット","Sandrone":"サンドロネ","Tartaglia":"タルタリヤ","Vesna":"ヴェスナ","Vodyanitsa":"ヴォジャニツァ",
+  "Lumine":"蛍","Aether":"空","Paimon":"パイモン","Dainsleif":"ダインスレイヴ"
+};
+
+function katakanaFallback(name: string) {
+  const map: Record<string, string> = {
+    a:"ア",b:"ブ",c:"ク",d:"ド",e:"エ",f:"フ",g:"グ",h:"ハ",i:"イ",j:"ジ",k:"ク",l:"ル",m:"ム",n:"ン",o:"オ",p:"プ",q:"ク",r:"ル",s:"ス",t:"ト",u:"ウ",v:"ヴ",w:"ワ",x:"クス",y:"イ",z:"ズ"," ":" "
+  };
+  return name.toLowerCase().split("").map((letter) => map[letter] ?? letter).join("").replace(/ /g,"・");
+}
+
 const regionalCharacters: Character[] = roster.flatMap(([region, quest, names], regionIndex) =>
   names.map((name): Character | null => {
     const id = slug(name);
@@ -49,11 +68,11 @@ const regionalCharacters: Character[] = roster.flatMap(([region, quest, names], 
     return {
       id,
       name,
-      japanese: "",
+      japanese: japaneseNames[name] ?? katakanaFallback(name),
       parts: regionIndex < 6 ? ["1" as const] : ["2" as const],
       role: `Playable character · ${region}`,
       color: palette[regionIndex],
-      background: `${name} is a playable character associated with ${region}. Their playable profile, elemental affinity, weapon and story appearances are represented by the Genshin Impact Character Archive.`,
+      background: `${name} of ${region}. Playable profile, elemental affinity, weapon and story appearances are recorded in the Genshin Impact Character Archive.`,
       powers: "Combat abilities, elemental skill and burst are defined by the character's official in-game talent records.",
       relationships: ["lumine", "paimon"].filter((related) => related !== id),
       contracts: region,

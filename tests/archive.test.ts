@@ -15,6 +15,8 @@ test("character relationships, locations and lore resolve to existing records", 
   assert.equal(ids.size, characters.length);
   for (const id of [...characters.flatMap((c) => c.relationships), ...locations.flatMap((l) => l.characters), ...connections.flatMap((c) => [c.from, c.to])]) assert.ok(ids.has(id), id);
   for (const part of ["1", "2"] as const) assert.ok(characters.some((character) => character.parts.includes(part)));
+  assert.ok(characters.every((character) => character.japanese.trim().length > 0), "Every character needs a Japanese name");
+  assert.ok(characters.every((character) => !character.background.includes("is a playable character associated with")));
 });
 
 test("all navigation destinations have route files", () => {
