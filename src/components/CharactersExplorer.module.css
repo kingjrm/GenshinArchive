@@ -8,10 +8,10 @@
 .parts button:hover,.parts button:focus-visible,.parts .activePart { background: var(--w); color: var(--k); border-color: var(--w); }
 .parts .activePart small { color: #555; }
 .layout { display: grid; grid-template-columns: minmax(225px,.27fr) minmax(0,1fr); gap: clamp(28px,3vw,54px); min-width: 0; }
-.selector { display: flex; flex-direction: column; align-self: start; max-height: 740px; overflow-y: auto; border-top: 1px solid #4b4845; }
-.selector button { display: grid; grid-template-columns: 30px minmax(0,1fr); column-gap: 11px; align-items: baseline; width: 100%; min-height: 64px; padding: 12px 10px 10px; text-align: left; border-bottom: 1px solid #484441; color: var(--w); transition: padding .2s, background .2s, color .2s; }
+.selector { display: flex; flex-direction: column; align-self: start; max-height: 740px; overflow-y: auto; overflow-x: hidden; border-top: 1px solid #4b4845; }
+.selector button { display: grid; grid-template-columns: 30px minmax(0,1fr); column-gap: 11px; align-content: center; align-items: center; width: 100%; min-height: 92px; padding: 14px 10px; text-align: left; border-bottom: 1px solid #484441; color: var(--w); transition: padding .2s, background .2s, color .2s; }
 .selector button>span { color: var(--c); font: 11px var(--m); }
-.selector strong { min-width: 0; font: clamp(18px,2.1vw,31px)/1.05 var(--d); text-transform: uppercase; font-weight: 400; overflow-wrap: normal; }
+.selector strong { min-width: 0; font: clamp(17px,1.65vw,25px)/1.02 var(--d); text-transform: uppercase; font-weight: 400; overflow-wrap: break-word; word-break: normal; }
 .selector small { grid-column: 2; color: #aaa39e; font: 11px var(--j); }
 .selector button:hover,.selector button:focus-visible { background: #282423; padding-left: 16px; }
 .selector .selected { background: #292424; border-left: 3px solid var(--c); padding-left: 13px; }
@@ -48,7 +48,7 @@
   .parts button { flex: 1; justify-content: center; }
   .layout { grid-template-columns: 1fr; gap: 20px; }
   .selector { flex-direction: row; max-height: none; overflow-x: auto; overflow-y: hidden; border-bottom: 1px solid #4b4845; scroll-snap-type: x proximity; }
-  .selector button { flex: 0 0 min(42vw,185px); min-height: 72px; scroll-snap-align: start; }
+  .selector button { flex: 0 0 min(42vw,185px); min-height: 92px; scroll-snap-align: start; align-content: center; }
   .selector strong { font-size: clamp(18px,4vw,25px); }
   .spotlightBody { grid-template-columns: 1fr; }
   .artwork { height: clamp(350px,100vw,500px); min-height: 0; }
