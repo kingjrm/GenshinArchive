@@ -68,7 +68,7 @@ export default function HomePage() {
           </div>
         </div>
         <figure className="end-artwork" data-home-art>
-          <CharacterArtwork name="Paimon" src="/images/characters/paimon.png" fadeIn immediateFallback sizes="(max-width: 760px) 85vw, 33vw" />
+          <CharacterArtwork name="Paimon" src="/images/characters/asmoday.jpg" fadeIn immediateFallback sizes="(max-width: 760px) 85vw, 33vw" />
           <figcaption>THE JOURNEY CONTINUES / 00</figcaption>
         </figure>
       </div>
