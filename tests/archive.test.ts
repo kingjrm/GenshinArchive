@@ -16,6 +16,7 @@ test("character relationships, locations and lore resolve to existing records", 
   for (const id of [...characters.flatMap((c) => c.relationships), ...locations.flatMap((l) => l.characters), ...connections.flatMap((c) => [c.from, c.to])]) assert.ok(ids.has(id), id);
   for (const part of ["1", "2"] as const) assert.ok(characters.some((character) => character.parts.includes(part)));
   assert.ok(characters.every((character) => character.japanese.trim().length > 0), "Every character needs a Japanese name");
+  assert.ok(characters.every((character) => ["lumine", "aether"].includes(character.id) ? !!character.vision : (character.vision ?? "").trim().length > 0), "Playable characters need a Vision");
   assert.ok(characters.every((character) => !character.background.includes("is a playable character associated with")));
 });
 

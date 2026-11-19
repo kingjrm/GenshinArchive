@@ -66,6 +66,7 @@ export function CharactersExplorer() {
               <dl className={styles.facts} data-character-copy>
                 <div><dt>CLASSIFICATION</dt><dd>{classification}</dd></div>
                 {affiliation && <div><dt>AFFILIATION / IDENTITY</dt><dd>{affiliation}</dd></div>}
+                <div><dt>VISION</dt><dd>{selected.vision ?? "Traveler resonance"}</dd></div>
               </dl>
               <p data-character-copy>{selected.background}</p>
               <button type="button" className={styles.open} onClick={() => openProfile(selected.id)} data-character-copy>OPEN FILE <ArrowUpRight size={19} aria-hidden="true" /></button>

@@ -36,7 +36,7 @@ export function CharacterProfile({ id, close }: { id: string | null; close: () =
       </div>
       <div className={styles.details} data-profile-copy>
         <div><h3>01 / POWERS</h3><p>{character.powers}</p></div>
-        <div><h3>02 / AFFILIATION</h3><p>{character.role} · {character.region}</p></div>
+        <div><h3>02 / AFFILIATION &amp; VISION</h3><p>{character.role} · {character.region} · <strong>{character.vision ?? "Traveler resonance"}</strong></p></div>
         <div><h3>03 / QUEST &amp; CONTRACTS</h3><p>{character.quest} · {character.contracts}</p></div>
         <div className={styles.connections}><h3>04 / RELATIONSHIPS</h3><div>{character.relationships.map((related) => <button type="button" key={related} onClick={() => { openProfile(related); root.current?.scrollTo({ top: 0 }); root.current?.querySelector<HTMLButtonElement>(".x")?.focus({ preventScroll: true }); }}>{characters.find((item) => item.id === related)!.name}</button>)}</div></div>
       </div>

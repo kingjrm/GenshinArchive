@@ -13,6 +13,7 @@ export interface Character {
   artwork: string | null;
   region?: string;
   quest?: string;
+  vision?: string;
 }
 export interface Devil {
   id: string;
