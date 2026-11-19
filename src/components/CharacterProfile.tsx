@@ -27,7 +27,7 @@ export function CharacterProfile({ id, close }: { id: string | null; close: () =
           <figcaption>PORTRAIT / {character.name.toUpperCase()}</figcaption>
         </figure>
         <div className={styles.intro}>
-          <span className={styles.serial} data-profile-copy>PERSONNEL FILE / {character.id.toUpperCase()}</span>
+          <span className={styles.serial} data-profile-copy>{character.region?.toUpperCase()} / {character.quest?.toUpperCase()}</span>
           <span className={styles.japanese} data-profile-copy>{character.japanese}</span>
           <h2 data-profile-title>{character.name}</h2>
           <p className={styles.role} data-profile-copy>{character.role}</p>
@@ -36,8 +36,8 @@ export function CharacterProfile({ id, close }: { id: string | null; close: () =
       </div>
       <div className={styles.details} data-profile-copy>
         <div><h3>01 / POWERS</h3><p>{character.powers}</p></div>
-        <div><h3>02 / AFFILIATION</h3><p>{character.role} · Part {character.parts.join(" + ")}</p></div>
-        <div><h3>03 / DEVILS &amp; CONTRACTS</h3><p>{character.contracts}</p></div>
+        <div><h3>02 / AFFILIATION</h3><p>{character.role} · {character.region}</p></div>
+        <div><h3>03 / QUEST &amp; CONTRACTS</h3><p>{character.quest} · {character.contracts}</p></div>
         <div className={styles.connections}><h3>04 / RELATIONSHIPS</h3><div>{character.relationships.map((related) => <button type="button" key={related} onClick={() => { openProfile(related); root.current?.scrollTo({ top: 0 }); root.current?.querySelector<HTMLButtonElement>(".x")?.focus({ preventScroll: true }); }}>{characters.find((item) => item.id === related)!.name}</button>)}</div></div>
       </div>
     </div>}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type KeyboardEvent } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { characters } from "@/data/characters";
 import { colorStyle } from "@/lib/archive";
@@ -12,11 +12,16 @@ import { CharacterArtwork } from "./CharacterArtwork";
 import styles from "./CharactersExplorer.module.css";
 
 export function CharactersExplorer() {
-  const { part, character, selectPart, selectCharacter, openProfile } = useArchive();
+  const { character, selectCharacter, openProfile } = useArchive();
+  const regions = ["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"];
+  const [region, setRegion] = useState("Mondstadt");
+  const [selectedId, setSelectedId] = useState(character);
   const root = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
-  const selected = characters.find((item) => item.id === character)!;
-  const visible = characters.filter((item) => item.parts.includes(part));
+  const selected = characters.find((item) => item.id === selectedId && item.region === region)
+    ?? characters.find((item) => item.region === region)
+    ?? characters[0];
+  const visible = characters.filter((item) => item.region === region);
   const [classification, affiliation] = selected.role.split(" · ");
   usePanelMotion(root, "character", character);
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -28,27 +33,28 @@ export function CharactersExplorer() {
     if (next === null) return;
     event.preventDefault();
     const id = visible[next].id;
+    setSelectedId(id);
     selectCharacter(id);
     const button = rail.current?.querySelector<HTMLButtonElement>(`[data-character="${id}"]`);
     button?.focus({ preventScroll: true });
     button?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: matchMedia(motionQuery).matches ? "smooth" : "instant" });
   };
   return <>
-    <PageHeading title="The" accent="Cast" japanese="登場人物">
-      <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Story part">{(["1", "2"] as const).map((value) => <button key={value} type="button" className={part === value ? styles.activePart : ""} aria-pressed={part === value} onClick={() => selectPart(value)}>PART {value}<small>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</small></button>)}</div>
+    <PageHeading title="Region" accent="Cast" japanese="人物">
+      <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Region">{regions.map((value) => <button key={value} type="button" className={region === value ? styles.activePart : ""} aria-pressed={region === value} onClick={() => { setRegion(value); const first = characters.find((item) => item.region === value); if (first) { setSelectedId(first.id); selectCharacter(first.id); } }}>{value}<small>{characters.find((item) => item.region === value)?.quest ?? "Regional figures"}</small></button>)}</div>
     </PageHeading>
     <div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
       <div className={styles.selectorHead}>
         <span>PERSONNEL INDEX / {String(visible.length).padStart(2, "0")} FILES</span>
       </div>
       <div className={styles.layout}>
-        <div id="cl" className={styles.selector} ref={rail} role="group" aria-label={`Part ${part} characters`} onKeyDown={onKeyDown}>
-          {visible.map((item, index) => <button key={item.id} type="button" data-character={item.id} className={character === item.id ? styles.selected : ""} aria-pressed={character === item.id} onClick={() => selectCharacter(item.id)}>
+        <div id="cl" className={styles.selector} ref={rail} role="group" aria-label={`${region} characters`} onKeyDown={onKeyDown}>
+          {visible.map((item, index) => <button key={item.id} type="button" data-character={item.id} className={selectedId === item.id ? styles.selected : ""} aria-pressed={selectedId === item.id} onClick={() => { setSelectedId(item.id); selectCharacter(item.id); }}>
             <span>{String(index + 1).padStart(2, "0")}</span><strong>{item.name}</strong><small>{item.japanese}</small>
           </button>)}
         </div>
         <div id="cst" className={styles.spotlight} ref={root}>
-          <div className={styles.spotlightHead}><span>SELECTED FILE / {selected.id.toUpperCase()}</span><span>PART {selected.parts.join(" + ")}</span></div>
+          <div className={styles.spotlightHead}><span>SELECTED FILE / {selected.id.toUpperCase()}</span><span>{selected.region?.toUpperCase()} · {selected.quest}</span></div>
           <div className={styles.spotlightBody}>
             <figure className={styles.artwork} data-character-art data-has-artwork={!!selected.artwork} data-artwork-right={selected.id === "kishibe" || undefined}>
               <CharacterArtwork key={selected.id} name={selected.name} src={selected.artwork} priority sizes="(max-width: 760px) 90vw, 43vw" />

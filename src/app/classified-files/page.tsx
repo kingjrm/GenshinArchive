@@ -3,8 +3,8 @@ import { PageMotion } from "@/animations/PageMotion";
 import { DevilsExplorer } from "@/components/DevilsExplorer";
 
 export const metadata: Metadata = {
-  title: "Classified Files",
-  description: "Browse the classified devil and fiend dossiers in the Chainsaw Man Archive.",
+  title: "Archon & Entity Files",
+  description: "Browse Archons, sovereigns, entities and organizations in the Teyvat Archive.",
 };
 
 export default function ClassifiedFilesPage() {

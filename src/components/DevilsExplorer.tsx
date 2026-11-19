@@ -13,8 +13,8 @@ import styles from "./DevilsExplorer.module.css";
 type Category = "all" | Devil["type"];
 const categories: { value: Category; label: string }[] = [
   { value: "all", label: "ALL FILES" },
-  { value: "devil", label: "DEVILS" },
-  { value: "fiend", label: "FIENDS" },
+  { value: "devil", label: "SOVEREIGNS" },
+  { value: "entity", label: "ENTITIES" },
 ];
 
 function Redaction({ children }: { children: string }) {
@@ -65,7 +65,7 @@ export function DevilsExplorer() {
   };
 
   return <><PageHeading title="Classified" accent="Files" japanese="機密">
-    <div className="devil-intro-copy" data-heading-detail><span>PUBLIC SAFETY / RESTRICTED ARCHIVE</span><p>Devil and fiend case files. Threat ratings are unofficial archive estimates. Focus or tap redactions to reveal.</p></div>
+    <div className="devil-intro-copy" data-heading-detail><span>TEYVAT / RESTRICTED ARCHIVE</span><p>Archon, sovereign and entity dossiers. Threat notes are informal archive ratings. Focus or tap redactions to reveal.</p></div>
   </PageHeading>
     <div className={styles.explorer}>
       <aside className={styles.sidebar} aria-label="Classified file index">

@@ -33,11 +33,11 @@ test("artwork references exist and use raster extensions", () => {
 
 test("classified records have explicit types and local artwork paths", () => {
   assert.equal(new Set(devils.map((file) => file.id)).size, devils.length);
-  assert.equal(devils.find((file) => file.id === "CM-002")?.type, "fiend");
-  assert.equal(devils.find((file) => file.id === "CM-005")?.subcategory, "Primal Fear");
-  assert.equal(devils.find((file) => file.id === "CM-007")?.subcategory, "Horseman");
+  assert.equal(devils.find((file) => file.id === "TE-001")?.type, "entity");
+  assert.equal(devils.find((file) => file.id === "TE-005")?.subcategory, "Ancient Dragon");
+  assert.equal(devils.find((file) => file.id === "TE-009")?.subcategory, "Pre-Human Powers");
   for (const file of devils) {
-    assert.ok(file.type === "devil" || file.type === "fiend");
+    assert.ok(file.type === "devil" || file.type === "fiend" || file.type === "entity");
     if (!file.artwork) continue;
     assert.match(file.artwork, /^\/images\/devils\/.+\.(png|webp|avif|jpe?g)$/i);
     assert.ok(existsSync("public" + file.artwork));
@@ -45,39 +45,19 @@ test("classified records have explicit types and local artwork paths", () => {
 });
 
 test("volume chapters and story arcs match the supplied covers", () => {
-  assert.equal(volumes.length, 24);
-  assert.deepEqual(volumes.map((volume) => volume.chapters), [
-    "1–7", "8–16", "17–25", "26–34", "35–43", "44–52",
-    "53–61", "62–70", "71–79", "80–88", "89–97", "98–103",
-    "104–112", "113–122", "123–133", "134–143", "144–153", "154–164",
-    "165–175", "176–186", "187–198", "199–210", "211–222", "223–232",
-  ]);
-  assert.equal(volumes[11].part, "2");
-  assert.ok(existsSync("public/images/placeholders/manga-cover.png"));
+  assert.equal(volumes.length, 9);
+  assert.equal(volumes[5].part, "2");
+  assert.deepEqual(volumes.map((volume) => volume.number), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  assert.ok(existsSync("public/images/placeholders/artwork.png"));
   for (const volume of volumes) {
-    assert.equal(volume.cover, `/images/volumes/csm_volume_${volume.number}.jpg`);
-    assert.match(volume.cover, /^\/images\/volumes\/.+\.(png|webp|avif|jpe?g)$/i);
+    assert.match(volume.cover ?? "", /^\/images\/locations\/.+\.svg$/i);
     assert.ok(existsSync(`public${volume.cover}`));
   }
-  assert.deepEqual(arcsForVolume(arcs, volumes[0]).map((arc) => arc.name), ["Introduction", "Bat Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[4]).map((arc) => arc.name), ["Katana Man", "Bomb Girl"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[8]).map((arc) => arc.name), ["Gun Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[10]).map((arc) => arc.name), ["Control Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[11]).map((arc) => arc.name), ["Justice Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[14]).map((arc) => arc.name), ["Falling Devil", "Chainsaw Man Church"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[17]).map((arc) => arc.name), ["Chainsaw Man Church", "Aging Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[20]).map((arc) => arc.name), ["Aging Devil", "War Devil"]);
-  assert.deepEqual(arcsForVolume(arcs, volumes[23]).map((arc) => arc.name), ["War Devil"]);
-  for (const arc of arcs) {
-    const [first, last = first] = arc.volumes.match(/\d+/g)?.map(Number) ?? [];
-    assert.deepEqual(volumes.filter((volume) => arcsForVolume([arc], volume).length).map((volume) => volume.number),
-      Array.from({ length: last - first + 1 }, (_, index) => first + index), arc.name);
-  }
   assert.ok(arcs.every((arc) => arc.chapters && arc.description.length > 70 && !arc.description.includes("undefined")));
-  assert.ok(arcs.every((arc) => /^https:\/\/(www\.viz\.com|books\.shueisha\.co\.jp)\//.test(arc.sourceUrl)));
-  assert.equal(arcs.length, 14);
+  assert.ok(arcs.every((arc) => /^https:\/\/genshin\.hoyoverse\.com\//.test(arc.sourceUrl)));
+  assert.equal(arcs.length, 10);
   for (const arc of arcs) {
-    assert.match(arc.artwork ?? "", /^\/images\/arcs\/.+\.(png|webp|avif|jpe?g)$/i);
+    assert.match(arc.artwork ?? "", /^\/images\/(locations|characters)\/.+\.(svg|png)$/i);
     assert.ok(existsSync(`public${arc.artwork}`), arc.name);
   }
 });

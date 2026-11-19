@@ -1,97 +1,14 @@
 import type { Devil } from "../types/archive";
 
 export const devils: Devil[] = [
-  {
-    "id": "CM-001",
-    "name": "Chainsaw Devil",
-    "type": "devil",
-    "japanese": "チェンソーの悪魔",
-    "contractor": "Pochita",
-    "threat": "S",
-    "description": "Hero of Hell. Feared enough that being eaten erases a devil from existence."
-  },
-  {
-    "id": "CM-002",
-    "name": "Blood Fiend",
-    "type": "fiend",
-    "japanese": "血の魔人",
-    "contractor": "Power",
-    "threat": "B",
-    "description": "A devil in a human corpse: a fiend, not a true devil. Blood is a weapon."
-  },
-  {
-    "id": "CM-003",
-    "name": "Gun Devil",
-    "type": "devil",
-    "japanese": "銃の悪魔",
-    "contractor": "Public Safety target",
-    "threat": "S",
-    "description": "Embodies fear of guns. Drives much of Part 1’s endgame."
-  },
-  {
-    "id": "CM-004",
-    "name": "Control Devil",
-    "type": "devil",
-    "japanese": "支配の悪魔",
-    "contractor": "Makima",
-    "threat": "S",
-    "description": "A devil that takes the form of a human leader. Chief mover of the Public Safety Saga."
-  },
-  {
-    "id": "CM-005",
-    "name": "Darkness Devil",
-    "type": "devil",
-    "subcategory": "Primal Fear",
-    "japanese": "暗闇の悪魔",
-    "contractor": "Hell’s Primal Fears",
-    "threat": "A",
-    "description": "One of the oldest fears, set among the strongest devils."
-  },
-  {
-    "id": "CM-006",
-    "name": "Falling Devil",
-    "type": "devil",
-    "japanese": "落下の悪魔",
-    "contractor": "Part 2 files",
-    "threat": "A",
-    "description": "A Part 2 devil. File partially [redacted].",
-    "redacted": "redacted text"
-  },
-  {
-    "id": "CM-007",
-    "name": "War Devil",
-    "type": "devil",
-    "subcategory": "Horseman",
-    "japanese": "戦争の悪魔",
-    "contractor": "Yoru / Asa",
-    "threat": "S",
-    "description": "Horseman devil. Sharing a body with a human host."
-  },
-  {
-    "id": "CM-008",
-    "name": "Future Devil",
-    "type": "devil",
-    "japanese": "未来の悪魔",
-    "contractor": "Aki Hayakawa",
-    "threat": "B",
-    "description": "A contractor devil with a glimpse of what is coming."
-  },
-  {
-    "id": "CM-009",
-    "name": "Fox Devil",
-    "type": "devil",
-    "japanese": "狐の悪魔",
-    "contractor": "Aki Hayakawa",
-    "threat": "C",
-    "description": "Summoned as a fox head to devour enemies."
-  },
-  {
-    "id": "CM-010",
-    "name": "Curse Devil",
-    "type": "devil",
-    "japanese": "呪いの悪魔",
-    "contractor": "Aki Hayakawa",
-    "threat": "A",
-    "description": "A contract with a heavy price — it spends years of life."
-  }
+  { id: "TE-001", name: "The Seven", type: "entity", subcategory: "Theocratic Archon Rulers", japanese: "七天神", contractor: "The nations of Teyvat", threat: "NATIONAL", description: "Seven elemental gods created after the conclusion of the Archon War. Each Archon holds a Gnosis and governs a nation through an ideal." },
+  { id: "TE-002", name: "Unknown God", type: "entity", subcategory: "Descender Entity", japanese: "謎の神", contractor: "The Heavenly Principles", threat: "UNKNOWN", description: "An entity that separated the Traveler twins at Teyvat's threshold. Her authority, identity and purpose remain unresolved." },
+  { id: "TE-003", name: "Celestia", type: "entity", subcategory: "Divine Authority", japanese: "天空島", contractor: "The Heavenly Principles", threat: "UNKNOWN", description: "A floating island associated with the divine throne, godhood and the maintainers of Teyvat's order." },
+  { id: "TE-004", name: "Abyss Order", type: "entity", subcategory: "Political and Military Force", japanese: "アビスの教団", contractor: "The Abyss", threat: "REGIONAL", description: "Creatures and organizations dedicated to opposing the rulers of Teyvat, led in part by the sibling of the Traveler." },
+  { id: "TE-005", name: "Azhdaha", type: "devil", subcategory: "Ancient Dragon", japanese: "若陀龍王", contractor: "Rex Lapis", threat: "HIGH", description: "An ancient dragon trapped beneath Nantianmen after his corruption and conflict with Morax." },
+  { id: "TE-006", name: "Dvalin", type: "devil", subcategory: "Elemental Dragon", japanese: "トワリン", contractor: "Mondstadt", threat: "RECOVERED", description: "The Anemo Dragon of the East, corrupted by Durin's blood and later freed from the Abyss's manipulation." },
+  { id: "TE-007", name: "Apep", type: "devil", subcategory: "Dragon Sovereign", japanese: "アペップ", contractor: "Sumeru", threat: "ANCIENT", description: "The Dendro Dragon Sovereign who preserved Sumeru's ecosystems across an age of divine rule." },
+  { id: "TE-008", name: "The Sustainer", type: "devil", subcategory: "Heavenly Enforcer", japanese: "永遠の万有", contractor: "Celestia", threat: "UNKNOWN", description: "The title given to the Unknown God's intervention and the unknown will that regulates Descenders." },
+  { id: "TE-009", name: "Dragon Sovereigns", type: "devil", subcategory: "Pre-Human Powers", japanese: "龍王", contractor: "Teyvat's ancient age", threat: "ANCIENT", description: "Rulers that preceded and were displaced by the seven victorious elements of the Archon War." },
+  { id: "TE-010", name: "The Shades", type: "devil", subcategory: "Heavenly Four", japanese: "天のしもべ", contractor: "The Heavenly Principles", threat: "UNKNOWN", description: "Four primordial assistants of the Heavenly Principles, including the figures of Death and Time associated with the Sustainer's pantheon." }
 ];

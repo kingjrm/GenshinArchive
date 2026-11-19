@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { arcs } from "@/data/arcs";
 import { characters } from "@/data/characters";
 import { devils } from "@/data/devils";
+import { locations } from "@/data/locations";
 import { colorStyle } from "@/lib/archive";
 import { usePanelMotion } from "@/animations/usePanelMotion";
 import { motionQuery } from "@/animations/gsap";
@@ -13,21 +14,25 @@ import { useArchive } from "./ArchiveShell";
 import { PageHeading } from "./PageHeading";
 import { CharacterLink } from "./CharacterLink";
 import { TransitionLink } from "./TransitionLink";
-import type { Part } from "@/types/archive";
 import styles from "./ArcsExplorer.module.css";
 
-const characterAliases: Record<string, string> = { Aki: "aki", Asa: "asa" };
-const locationAliases: Record<string, string> = { "Denji’s apartment": "Denji’s Home", Hotel: "The Hotel", "High school": "Academy", School: "Academy" };
-const knownLocations = ["Tokyo", "Public Safety HQ", "The Hotel", "Academy", "Denji’s Home"];
+const characterAliases: Record<string, string> = {};
+const locationAliases: Record<string, string> = {};
+const knownLocations = locations.map((location) => location.name);
 
 export function ArcsExplorer() {
+  const regions = ["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"];
   const { arc, setArc, setDevil, setVolume } = useArchive();
   const root = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
-  const selected = arcs[arc];
+  const selected = arcs[arc] ?? arcs[0];
   const part = selected.part;
-  const visible = arcs.map((item, index) => ({ item, index })).filter(({ item }) => item.part === part);
-  const selectPart = (next: Part) => setArc(arcs.findIndex((item) => item.part === next));
+  const region = selected.volumes;
+  const visible = arcs.map((item, index) => ({ item, index })).filter(({ item }) => item.volumes === region);
+  const selectRegion = (next: string) => {
+    const index = arcs.findIndex((item) => item.volumes === next);
+    if (index >= 0) setArc(index);
+  };
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (!(event.target instanceof HTMLButtonElement)) return;
     const current = visible.findIndex(({ index }) => index === arc);
@@ -52,9 +57,9 @@ export function ArcsExplorer() {
     : numbers.slice(0, 1);
   const devilIndex = devils.findIndex((item) => item.name === selected.antagonist);
 
-  return <><PageHeading title="Story" accent="Arcs" japanese="物語">
-    <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Story part">
-      {(["1", "2"] as const).map((value) => <button key={value} type="button" aria-pressed={part === value} className={part === value ? styles.activePart : ""} onClick={() => selectPart(value)}>PART {value}<span>{value === "1" ? "PUBLIC SAFETY" : "ACADEMY"}</span></button>)}
+  return <>  <PageHeading title="Story" accent="Chapters" japanese="物語">
+    <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Archon Quest region">
+      {regions.map((value) => <button key={value} type="button" aria-pressed={region === value} className={region === value ? styles.activePart : ""} onClick={() => selectRegion(value)}>{value}<span>{arcs.find((item) => item.volumes === value)?.chapters ?? "Regional quest"}</span></button>)}
     </div>
   </PageHeading><div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
     <div className={styles.selectorHead}>
@@ -66,20 +71,20 @@ export function ArcsExplorer() {
       </button>)}
     </div>
     <div id="arc-panel" className={styles.feature} role="tabpanel" aria-labelledby={`arc-${arc}`} ref={root}>
-      <div className={styles.featureHead}><span>FILE {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>PART {part} · {selected.volumes.toUpperCase()}</span></div>
+      <div className={styles.featureHead}><span>FILE {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>CHAPTER {part} · {selected.volumes.toUpperCase()}</span></div>
       <div className={styles.layout}>
         <figure className={styles.artwork} data-arc-art={selected.name}>
           <Image src={selected.artwork ?? "/images/placeholders/artwork.png"} alt={selected.artwork ? `${selected.name} arc artwork` : `${selected.name} arc artwork pending`} fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={`${styles.artworkImage} ${selected.artwork ? styles.artworkLoaded : ""}`} />
           <figcaption><span>{String(arc + 1).padStart(2, "0")}</span><small>{selected.artwork ? selected.name.toUpperCase() : "ARC ARTWORK PENDING"}</small></figcaption>
         </figure>
         <div className={styles.story}>
-          <span className={styles.kicker} data-arc-copy>THE ARCHIVE / PART {part}</span>
+          <span className={styles.kicker} data-arc-copy>THE ARCHIVE / CHAPTER {part}</span>
           <h2 className={styles.title} data-arc-title>{selected.name}</h2>
           <p className={styles.synopsis} data-arc-copy>{selected.description}</p>
-          <a className={styles.source} data-arc-copy href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">PUBLISHER VOLUME <ArrowUpRight size={13} aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span></a>
+          <a className={styles.source} data-arc-copy href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">OFFICIAL STORY SOURCE <ArrowUpRight size={13} aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span></a>
           <div className={styles.facts} data-arc-copy>
             <div><span>CHAPTER RANGE</span><strong>{selected.chapters}</strong></div>
-            <div><span>MANGA VOLUMES</span><strong>{selected.volumes}</strong></div>
+            <div><span>REGION</span><strong>{selected.volumes}</strong></div>
           </div>
           <div className={styles.related} data-arc-copy>
             <div><h3>MAIN CHARACTERS</h3><p>{mainCharacters.map((name, index) => {
@@ -88,7 +93,7 @@ export function ArcsExplorer() {
             })}</p></div>
             <div><h3>KEY THREAT</h3><p>{devilIndex >= 0 ? <TransitionLink href="/classified-files" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
             <div><h3>KEY LOCATIONS</h3><p>{keyLocations.map((name, index) => <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{knownLocations.includes(locationAliases[name] ?? name) ? <TransitionLink href="/locations">{name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : name}</span>)}</p></div>
-            <div><h3>RELATED VOLUMES</h3><p>{relatedVolumes.map((number, index) => <span key={number}>{index > 0 && <span className={styles.separator}> / </span>}<TransitionLink href="/volumes" onClick={() => setVolume(number)}>VOL. {String(number).padStart(2, "0")}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></span>)}</p></div>
+            <div><h3>NATION INDEX</h3><p><TransitionLink href="/volumes" onClick={() => setVolume(Math.max(1, locations.findIndex((location) => location.name === selected.locations.split(", ")[0]) + 1))}>{selected.locations.split(", ")[0]}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></p></div>
           </div>
         </div>
       </div>

@@ -1,70 +1,13 @@
 import type { ArchiveLocation } from "../types/archive";
 
 export const locations: ArchiveLocation[] = [
-  {
-    "name": "Tokyo",
-    "japanese": "東京",
-    "subtitle": "City of devils",
-    "description": "The setting of most of the series: devil hunters on rooftops, devils in alleys.",
-    "color": "#CF262D",
-    "characters": [
-      "denji",
-      "makima"
-    ]
-  },
-  {
-    "name": "Public Safety HQ",
-    "japanese": "公安",
-    "subtitle": "Special Division 4",
-    "description": "Where hunters train, and where Makima runs missions.",
-    "color": "#76736F",
-    "characters": [
-      "makima",
-      "aki"
-    ]
-  },
-  {
-    "name": "Denji’s Home",
-    "japanese": "デンジの家",
-    "subtitle": "Shack, then shared house",
-    "description": "From a shack beside a river to a shared household with Power and Aki.",
-    "color": "#E48B36",
-    "characters": [
-      "denji",
-      "power"
-    ]
-  },
-  {
-    "name": "The Hotel",
-    "japanese": "ホテル",
-    "subtitle": "Eternity Devil",
-    "description": "A hotel with no exit.",
-    "color": "#111111",
-    "characters": [
-      "denji",
-      "power",
-      "aki"
-    ]
-  },
-  {
-    "name": "Hell",
-    "japanese": "地獄",
-    "subtitle": "Where devils die and return",
-    "description": "Where Pochita is a hero and Darkness hunts him.",
-    "color": "#CF262D",
-    "characters": [
-      "pochita"
-    ]
-  },
-  {
-    "name": "Academy",
-    "japanese": "学園",
-    "subtitle": "School life",
-    "description": "Part 2 school grounds where Asa’s days become something else.",
-    "color": "#E48B36",
-    "characters": [
-      "asa",
-      "yoru"
-    ]
-  }
+  { name: "Mondstadt", japanese: "モンド", subtitle: "City of Freedom", description: "A wind-shaped city surrounded by Dvalin's domain and ruled not by kings, but by the ideals of Barbatos.", color: "#56BFAA", characters: ["lumine", "venti"], image: "/images/locations/mondstadt.svg" },
+  { name: "Liyue", japanese: "璃月", subtitle: "City of Contracts", description: "A prosperous harbor nation shaped by ancient adepti, merchants and Rex Lapis's final contract with humanity.", color: "#C9A84C", characters: ["lumine", "zhongli", "xiao"], image: "/images/locations/liyue.svg" },
+  { name: "Inazuma", japanese: "稲妻", subtitle: "Nation of Eternity", description: "An isolated archipelago governed from Tenshukaku, where Raiden Ei pursued eternity and citizens resisted the Vision Hunt Decree.", color: "#9A78C7", characters: ["lumine", "raiden"], image: "/images/locations/inazuma.svg" },
+  { name: "Sumeru", japanese: "スメール", subtitle: "Realm of Wisdom", description: "A rainforest and desert nation ruled through knowledge. The Akademiya and the Sabzeruz Festival conceal a deeper struggle over dreams.", color: "#A3C85C", characters: ["lumine", "nahida"], image: "/images/locations/sumeru.svg" },
+  { name: "Fontaine", japanese: "フォンテーヌ", subtitle: "Nation of Justice", description: "A water-focused nation of court trials and prophecy, home to the Iudex and the mysterious Oceanids.", color: "#62BBD2", characters: ["lumine", "furina", "neuvillette"], image: "/images/locations/fontaine.svg" },
+  { name: "Natlan", japanese: "ナタ", subtitle: "Nation of Pyro", description: "A confederation of tribes united around the Sacred Flame, preparing for war against the Abyss.", color: "#EE7B35", characters: ["lumine", "mavuika"], image: "/images/locations/natlan.svg" },
+  { name: "Nod-Krai", japanese: "ノード・クライ", subtitle: "Southern Border of Snezhnaya", description: "A developing autonomous frontier south of Snezhnaya where the Frostmoon Scions, Lightkeepers and Fatui hold competing interests.", color: "#91B5C9", characters: ["lumine", "lauma", "flins", "aino"], image: "/images/locations/nod-krai.svg" },
+  { name: "Snezhnaya", japanese: "スネージナヤ", subtitle: "Nation of the Cryo Archon", description: "The frostbound homeland of the Tsaritsa and the Fatui Harbingers, the final main Archon Quest nation and source of Teyvat's Gnosis campaign.", color: "#BBD4E5", characters: ["lumine", "tartaglia", "arlecchino"], image: "/images/locations/snezhnaya.svg" },
+  { name: "Khaenri'ah", japanese: "カーンルイア", subtitle: "The Forsaken Realm", description: "An advanced human kingdom destroyed five hundred years before the main story; its survivors and monsters are central to Teyvat's hidden history.", color: "#5077A8", characters: ["lumine", "dainsleif"], image: "/images/locations/khaenriah.svg" }
 ];

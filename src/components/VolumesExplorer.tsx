@@ -44,43 +44,43 @@ export function VolumesExplorer() {
   };
 
   return <div className={styles.collection}>
-    <div className={styles.topline}><span>THE COLLECTION / 01—24</span><span>SELECT A VOLUME TO EXPLORE</span></div>
+    <div className={styles.topline}><span>THE NATIONS / 01—09</span><span>SELECT A REGION TO EXPLORE</span></div>
     <div className={styles.feature} id="vf" ref={root} style={{ ...colorStyle(selected.color), scrollMarginTop: "80px" }}>
       <div className={styles.coverStage} data-feature-cover>
         <span className={styles.spine} aria-hidden="true" />
         <VolumeCover key={volume} volume={selected} featured />
       </div>
       <div className={`${styles.copy} volume-copy`}>
-        <div className={styles.part}>PART {selected.part} / {selected.part === "1" ? "PUBLIC SAFETY" : "ACADEMY SAGA"}</div>
-        <div className={styles.number} data-volume-label>VOL. {String(volume).padStart(2, "0")}</div>
-        <h2 className={styles.title} aria-live="polite">Chainsaw Man</h2>
+        <div className={styles.part}>CHAPTER {selected.part} / {selected.part === "1" ? "ARCHON QUEST" : "JOURNEY OF THE ABSENT"}</div>
+        <div className={styles.number} data-volume-label>REGION {String(volume).padStart(2, "0")}</div>
+        <h2 className={styles.title} aria-live="polite">{["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"][volume - 1]}</h2>
         <dl className={styles.details}>
-          <div><dt>CHAPTERS</dt><dd>{selected.chapters ?? "Range not verified"}</dd></div>
-          <div><dt>STORY</dt><dd>{relatedArcs.length ? relatedArcs.map((arc) => <TransitionLink key={arc.name} href="/arcs" className={styles.arcLink} onClick={() => setArc(arcs.indexOf(arc))}>{arc.name}</TransitionLink>) : "Arc mapping unavailable"}</dd></div>
-          {selected.publishedInJapan && <div><dt>JAPAN PRINT RELEASE</dt><dd>{selected.sourceUrl ? <a className={styles.sourceLink} href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.publishedInJapan}<span className="sr-only"> (publisher source opens in new tab)</span></a> : selected.publishedInJapan}</dd></div>}
+          <div><dt>STORY FOCUS</dt><dd>{selected.chapters ?? "Not available"}</dd></div>
+          <div><dt>STORY CHAPTERS</dt><dd>{relatedArcs.length ? relatedArcs.map((arc) => <TransitionLink key={arc.name} href="/arcs" className={styles.arcLink} onClick={() => setArc(arcs.indexOf(arc))}>{arc.name}</TransitionLink>) : "Open the story chapter index"}</dd></div>
+          {selected.publishedInJapan && <div><dt>EXPLORE</dt><dd>{selected.sourceUrl ? <a className={styles.sourceLink} href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">{selected.publishedInJapan}<span className="sr-only"> (opens official source in a new tab)</span></a> : selected.publishedInJapan}</dd></div>}
         </dl>
-        <p className={styles.context}>{selected.part === "1" ? "Public Safety Saga" : "Academy Saga"} · Story arcs overlapping this volume&apos;s chapters.</p>
+        <p className={styles.context}>{selected.part === "1" ? "Primary Archon Quest region" : "Later journey region"} · Region and story connections.</p>
         <div className={styles.controls}>
           <button disabled={volume === 1} onClick={() => choose(volume - 1)} aria-label="Previous volume"><ArrowLeft size={18} aria-hidden="true" /> PREV</button>
           <button disabled={volume === volumes.length} onClick={() => choose(volume + 1)} aria-label="Next volume">NEXT <ArrowRight size={18} aria-hidden="true" /></button>
         </div>
       </div>
     </div>
-    <div className={styles.galleryHeading}><h3>ALL VOLUMES</h3><span>SWIPE / SCROLL TO BROWSE</span></div>
-    <div className={styles.gallery} id="vs" ref={rail} role="group" aria-label="Manga volume gallery" onKeyDown={onGalleryKeyDown}>
+    <div className={styles.galleryHeading}><h3>ALL REGIONS</h3><span>SWIPE / SCROLL TO BROWSE</span></div>
+    <div className={styles.gallery} id="vs" ref={rail} role="group" aria-label="Nation region gallery" onKeyDown={onGalleryKeyDown}>
       {volumes.map((item) => <button
         className={`${styles.thumbnail} ${volume === item.number ? styles.selected : ""}`}
         key={item.number}
         data-volume={item.number}
-        aria-label={`Volume ${item.number}`}
+        aria-label={`Region ${item.number}`}
         aria-pressed={volume === item.number}
         aria-controls="vf"
         onClick={() => choose(item.number, true)}
       >
         <span className={styles.thumbnailCover}><VolumeCover volume={item} /></span>
-        <span className={styles.thumbnailMeta}><b>{String(item.number).padStart(2, "0")}</b><span>PART {item.part}</span></span>
+        <span className={styles.thumbnailMeta}><b>{String(item.number).padStart(2, "0")}</b><span>{["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"][item.number - 1]}</span></span>
       </button>)}
     </div>
-    <p className={styles.footnote}>Chapter and arc ranges follow the published volume contents and Chainsaw Man Wiki&apos;s story index.</p>
+    <p className={styles.footnote}>Region summaries follow the official Genshin Impact story and world descriptions. Use official sources for the latest quest details.</p>
   </div>;
 }

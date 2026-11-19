@@ -11,12 +11,14 @@ export interface Character {
   relationships: string[];
   contracts: string;
   artwork: string | null;
+  region?: string;
+  quest?: string;
 }
 export interface Devil {
   id: string;
   name: string;
   japanese: string;
-  type: "devil" | "fiend";
+  type: "devil" | "fiend" | "entity";
   subcategory?: string;
   artwork?: string | null;
   contractor: string;

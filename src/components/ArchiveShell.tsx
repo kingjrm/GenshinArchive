@@ -44,7 +44,7 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   const [preview, setPreview] = useState(0);
   const [profile, setProfile] = useState<string | null>(null);
   const [part, setPart] = useState<Part>("1");
-  const [character, setCharacter] = useState("denji");
+  const [character, setCharacter] = useState("lumine");
   const [devil, setDevil] = useState(0);
   const [arc, setArc] = useState(0);
   const [volume, setVolume] = useState(1);
@@ -208,12 +208,12 @@ export function ArchiveShell({ children }: { children: ReactNode }) {
   return <ArchiveContext.Provider value={{ navigate, part, character, selectPart, selectCharacter, openProfile: setProfile, devil, setDevil, arc, setArc, volume, setVolume }}>
     <div ref={root}>
       <CustomCursor />
-      <div id="ld" role="status" aria-label="Loading archive"><i /><h1 className="d"><span className="ld-half ld-top"><span className="ld-word">Chainsaw</span></span><span className="ld-half ld-bottom"><span className="ld-word">Man</span><span className="ld-activity" aria-hidden="true" /></span></h1></div>
+      <div id="ld" role="status" aria-label="Loading archive"><i /><h1 className="d"><span className="ld-half ld-top"><span className="ld-word">Genshin</span></span><span className="ld-half ld-bottom"><span className="ld-word">Impact</span><span className="ld-activity" aria-hidden="true" /></span></h1></div>
       <div id="wp" aria-hidden="true" /><div id="wk" aria-hidden="true" />
       <a className="skip-link" href="#main">SKIP TO CONTENT</a>
       <header inert={menuOpen || !!profile}>
-        <TransitionLink href="/" className="wm" aria-label="Home"><span>CSM</span><b>{"//"}</b><span>ARCHIVE</span></TransitionLink>
-        <span id="pt">{pathname === "/" ? "PART 1 — 2 · チェンソーマン" : navigation.find((entry) => entry.href === pathname)?.label ?? pathname.slice(1).toUpperCase()}</span>
+        <TransitionLink href="/" className="wm" aria-label="Home"><span>GI</span><b>{"//"}</b><span>TEYVAT</span></TransitionLink>
+        <span id="pt">{pathname === "/" ? "TEYVAT ARCHIVE · GENSHIN IMPACT" : navigation.find((entry) => entry.href === pathname)?.label ?? pathname.slice(1).toUpperCase()}</span>
         <button id="mb" aria-expanded={menuOpen} aria-controls="mn" onClick={() => setMenuOpen(true)}>MENU</button>
       </header>
       <nav ref={menu} id="mn" className={menuOpen ? "on" : ""} aria-label="Main" aria-modal={menuOpen || undefined} role="dialog" inert={!menuOpen}>

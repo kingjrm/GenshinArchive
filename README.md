@@ -1,4 +1,4 @@
-# CHAINSAW MAN — Archive
+# GENSHIN IMPACT — Teyvat Archive
 
 Phase 1 migration of the supplied HTML prototype. Next.js App Router, TypeScript, React, Tailwind utilities, CSS Modules, GSAP/ScrollTrigger, `@gsap/react`, and Lucide React.
 

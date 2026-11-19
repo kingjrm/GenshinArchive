@@ -115,7 +115,7 @@ export function LocationsExplorer() {
   return <div ref={root} className={styles.explorer}>
     <PageHeading title="World &" accent="Places" japanese="世界">
       <div className={styles.headingMeta} data-heading-detail>
-        <p>{String(locations.length).padStart(2, "0")} LOCATIONS / FIELD GUIDE <span>FROM TOKYO TO HELL, FOLLOW THE STORY.</span></p>
+        <p>{String(locations.length).padStart(2, "0")} REGIONS / FIELD GUIDE <span>FROM MONDSTADT TO KHANRI'AH, FOLLOW THE JOURNEY.</span></p>
         <div className={styles.navigation}>
           <span className={styles.counter} aria-live="polite">{String(active + 1).padStart(2, "0")} <b>/ {String(locations.length).padStart(2, "0")}</b></span>
           <button type="button" aria-label="Previous location" disabled={active === 0} onClick={() => goTo(active - 1)}><ArrowLeft size={21} aria-hidden="true" /></button>
