@@ -57,9 +57,9 @@ test("volume chapters and story arcs match the supplied covers", () => {
   }
   assert.ok(arcs.every((arc) => arc.chapters && arc.description.length > 70 && !arc.description.includes("undefined")));
   assert.ok(arcs.every((arc) => /^https:\/\/genshin\.hoyoverse\.com\//.test(arc.sourceUrl)));
-  assert.equal(arcs.length, 10);
+  assert.equal(arcs.length, 38);
   for (const arc of arcs) {
-    assert.match(arc.artwork ?? "", /^\/images\/(locations|characters)\/.+\.(svg|png)$/i);
+    assert.match(arc.artwork ?? "", /^\/images\/(locations|characters)\/.+\.(svg|png|jpe?g)$/i);
     assert.ok(existsSync(`public${arc.artwork}`), arc.name);
   }
 });

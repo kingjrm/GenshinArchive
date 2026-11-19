@@ -21,7 +21,7 @@ const locationAliases: Record<string, string> = {};
 const knownLocations = locations.map((location) => location.name);
 
 export function ArcsExplorer() {
-  const regions = ["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya","Khaenri'ah"];
+  const regions = ["Mondstadt","Liyue","Inazuma","Sumeru","Fontaine","Natlan","Nod-Krai","Snezhnaya"];
   const { arc, setArc, setDevil, setVolume } = useArchive();
   const root = useRef<HTMLDivElement>(null);
   const rail = useRef<HTMLDivElement>(null);
@@ -65,25 +65,25 @@ export function ArcsExplorer() {
     <div className={styles.selectorHead}>
       <span className={styles.eyebrow}>STORY INDEX / {String(arcs.length).padStart(2, "0")} FILES</span>
     </div>
-    <div id="at" className={styles.rail} role="tablist" aria-label={`Part ${part} story arcs`} ref={rail} onKeyDown={onKeyDown}>
+    <div id="at" className={styles.rail} role="tablist" aria-label={`${region} Archon Quest acts`} ref={rail} onKeyDown={onKeyDown}>
       {visible.map(({ item, index }, position) => <button key={item.name} type="button" id={`arc-${index}`} data-arc={index} role="tab" aria-controls="arc-panel" aria-selected={arc === index} tabIndex={arc === index ? 0 : -1} className={arc === index ? styles.activeTab : ""} onClick={() => setArc(index)}>
         <span className={styles.tabNumber}>{String(position + 1).padStart(2, "0")}</span><span className={styles.tabTitle}>{item.name}</span>
       </button>)}
     </div>
     <div id="arc-panel" className={styles.feature} role="tabpanel" aria-labelledby={`arc-${arc}`} ref={root}>
-      <div className={styles.featureHead}><span>FILE {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>CHAPTER {part} · {selected.volumes.toUpperCase()}</span></div>
+      <div className={styles.featureHead}><span>ARCHON QUEST {String(arc + 1).padStart(2, "0")} / {String(arcs.length).padStart(2, "0")}</span><span>{selected.volumes.toUpperCase()}</span></div>
       <div className={styles.layout}>
         <figure className={styles.artwork} data-arc-art={selected.name}>
           <Image src={selected.artwork ?? "/images/placeholders/artwork.png"} alt={selected.artwork ? `${selected.name} arc artwork` : `${selected.name} arc artwork pending`} fill sizes="(max-width: 760px) 90vw, 48vw" priority loading="eager" className={`${styles.artworkImage} ${selected.artwork ? styles.artworkLoaded : ""}`} />
           <figcaption><span>{String(arc + 1).padStart(2, "0")}</span><small>{selected.artwork ? selected.name.toUpperCase() : "ARC ARTWORK PENDING"}</small></figcaption>
         </figure>
         <div className={styles.story}>
-          <span className={styles.kicker} data-arc-copy>THE ARCHIVE / CHAPTER {part}</span>
+          <span className={styles.kicker} data-arc-copy>ARCHON QUEST / {selected.volumes.toUpperCase()}</span>
           <h2 className={styles.title} data-arc-title>{selected.name}</h2>
           <p className={styles.synopsis} data-arc-copy>{selected.description}</p>
           <a className={styles.source} data-arc-copy href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">OFFICIAL STORY SOURCE <ArrowUpRight size={13} aria-hidden="true" /><span className="sr-only"> (opens in new tab)</span></a>
           <div className={styles.facts} data-arc-copy>
-            <div><span>CHAPTER RANGE</span><strong>{selected.chapters}</strong></div>
+            <div><span>QUEST ACT</span><strong>{selected.chapters}</strong></div>
             <div><span>REGION</span><strong>{selected.volumes}</strong></div>
           </div>
           <div className={styles.related} data-arc-copy>
