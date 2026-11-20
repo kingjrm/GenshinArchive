@@ -65,6 +65,10 @@ export interface Volume {
   title?: string;
   region?: string;
   summary?: string;
+  archon?: string;
+  element?: string;
+  status?: string;
+  tagline?: string;
 }
 export interface NavigationItem {
   href: string;

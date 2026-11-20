@@ -21,8 +21,10 @@ export function usePanelMotion(root: RefObject<HTMLElement | null>, kind: "chara
           .fromTo("[data-arc-title]", { y: 38, opacity: 0 }, { y: 0, opacity: 1, duration: .7 }, .12)
           .fromTo("[data-arc-copy]", { y: 22, opacity: 0 }, { y: 0, opacity: 1, stagger: .08, duration: .6 }, .25);
       } else if (kind === "volume") {
-        timeline.fromTo("[data-feature-cover]", { x: -22, rotation: -4, scale: .97, opacity: 0 }, { x: 0, rotation: -2, scale: 1, opacity: 1, duration: .75 })
-          .fromTo(".volume-copy>*", { y: 20, opacity: 0 }, { y: 0, opacity: 1, stagger: .07, duration: .55 }, .1);
+        timeline
+          .fromTo("[data-feature-cover]", { scaleX: 0, transformOrigin: "left" }, { scaleX: 1, duration: .5, ease: "expo.out" }, 0)
+          .fromTo("[data-volume-label]", { y: 22, opacity: 0, clipPath: "inset(0 0 100% 0)" }, { y: 0, opacity: 1, clipPath: "inset(0 0 0% 0)", stagger: .055, duration: .65, ease: "expo.out", clearProps: "transform,opacity,clipPath" }, .08)
+          .fromTo(".volume-copy .nationName", { x: -30, opacity: 0 }, { x: 0, opacity: 1, duration: .7, ease: "expo.out", clearProps: "transform,opacity" }, .05);
       } else {
         timeline.delay(.15).fromTo("[data-profile-art]", { x: -35, opacity: 0 }, { x: 0, opacity: 1, duration: .8 }, 0)
           .fromTo("[data-profile-title]", { y: 45, opacity: 0 }, { y: 0, opacity: 1, duration: .75 }, .1)
