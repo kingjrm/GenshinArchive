@@ -798,177 +798,215 @@
 
 
 /* ══════════════════════════════════════════════════════════
-   RONOVA — HEAVY RED GLITCH  (TE-006)
+   RONOVA — CORRUPTED RECORD GLITCH  (TE-006)
+   Dark. Rare. Violent. No neon.
    ══════════════════════════════════════════════════════════ */
 
-/* ── NAME GLITCH ── */
+/* ── NAME ── */
+/* Deep blood-red. Almost black. No glow, no bloom. */
 .shadeBandNameGlitch {
   position: relative;
-  color: #ff2244 !important;
-  text-shadow:
-    0 0 20px rgba(255,34,68,.8),
-    0 0 60px rgba(255,34,68,.4);
-  animation: ronovaNameFlicker 3.5s steps(1) infinite;
+  color: #9b1a1a !important;
+  text-shadow: none;
+  animation: ronovaNameCorrupt 6s steps(1) infinite;
 }
 
-/* Red channel — shifted right */
+/*
+  ::before = same text, same color, offset slice.
+  Creates block-displacement — like corrupted video frames.
+  No second color. Pure positional corruption.
+*/
 .shadeBandNameGlitch::before {
   content: attr(data-text);
   position: absolute;
   left: 0; top: 0;
   width: 100%;
-  color: #ff0033;
-  opacity: .85;
-  clip-path: inset(0 0 60% 0);
-  animation: ronovaGlitchRed 2.8s steps(1) infinite;
+  color: #7a0000;
+  clip-path: inset(0 0 100% 0); /* hidden by default */
+  transform: translateX(0);
+  animation: ronovaNameSliceA 6s steps(1) infinite;
   pointer-events: none;
   user-select: none;
 }
 
-/* Cyan channel — shifted left */
+/*
+  ::after = darkened duplicate for a second displaced slice.
+  Offset in the opposite direction, different vertical band.
+*/
 .shadeBandNameGlitch::after {
   content: attr(data-text);
   position: absolute;
   left: 0; top: 0;
   width: 100%;
-  color: #00ffee;
-  opacity: .55;
-  clip-path: inset(45% 0 20% 0);
-  animation: ronovaGlitchCyan 2.1s steps(1) infinite;
+  color: #cc2222;
+  clip-path: inset(100% 0 0 0); /* hidden by default */
+  transform: translateX(0);
+  animation: ronovaNameSliceB 6s steps(1) infinite;
   pointer-events: none;
   user-select: none;
 }
 
-@keyframes ronovaNameFlicker {
-  0%   { text-shadow: 0 0 20px rgba(255,34,68,.8), 0 0 60px rgba(255,34,68,.4); }
-  4%   { text-shadow: 4px 0 0 #ff0033, -4px 0 0 #00ffee, 0 0 40px rgba(255,34,68,.9); opacity: .85; }
-  5%   { text-shadow: -3px 0 0 #ff0033, 3px 0 0 #00ffee; opacity: 1; }
-  6%   { text-shadow: 0 0 20px rgba(255,34,68,.8); opacity: 1; }
-  34%  { text-shadow: 0 0 20px rgba(255,34,68,.8); }
-  35%  { text-shadow: 6px 0 0 #ff0044, -6px 0 0 #00eeff; opacity: .6; }
-  36%  { text-shadow: -2px 0 0 #ff0044, 2px 0 0 #00eeff; opacity: 1; }
-  37%  { text-shadow: 0 0 30px rgba(255,34,68,1), 0 0 80px rgba(255,34,68,.5); }
-  60%  { text-shadow: 0 0 20px rgba(255,34,68,.8); }
-  61%  { text-shadow: 8px 0 0 #ff0033, -8px 0 0 #00ffee; opacity: .4; }
-  62%  { opacity: 1; text-shadow: 0 0 20px rgba(255,34,68,.8); }
-  85%  { text-shadow: 0 0 20px rgba(255,34,68,.8); }
-  86%  { text-shadow: -5px 0 0 #ff0033, 5px 0 0 #00ffee, 0 0 60px rgba(255,34,68,.9); }
-  87%  { text-shadow: 0 0 20px rgba(255,34,68,.8); }
-  100% { text-shadow: 0 0 20px rgba(255,34,68,.8), 0 0 60px rgba(255,34,68,.4); }
+/*
+  Main text animation:
+  - Mostly dead-still (threatening)
+  - 3 short violent events across the 6s loop
+  - Brief opacity blackouts, never bright
+*/
+@keyframes ronovaNameCorrupt {
+  /* ─── REST ─── */
+  0%,  100% { color: #9b1a1a; opacity: 1;   transform: none;             }
+
+  /* ─── EVENT 1 (≈10%) ─── */
+  9.9%       { color: #9b1a1a; opacity: 1;   transform: none;             }
+  10%        { color: #6b0000; opacity: .2;  transform: translateX(6px);  }
+  10.5%      { color: #cc1111; opacity: 1;   transform: translateX(-4px); }
+  11%        { color: #9b1a1a; opacity: 1;   transform: none;             }
+  11.5%      { color: #6b0000; opacity: .0;  transform: none;             }
+  12%        { color: #9b1a1a; opacity: 1;   transform: none;             }
+
+  /* ─── EVENT 2 (≈38%) ─── */
+  37.9%      { color: #9b1a1a; opacity: 1;   transform: none;             }
+  38%        { color: #550000; opacity: .15; transform: translateX(-8px); }
+  38.5%      { color: #aa0000; opacity: 1;   transform: translateX(5px);  }
+  39%        { color: #880000; opacity: .4;  transform: none;             }
+  39.5%      { color: #9b1a1a; opacity: 1;   transform: none;             }
+
+  /* ─── EVENT 3 (≈74%) — longest/worst ─── */
+  73.9%      { color: #9b1a1a; opacity: 1;   transform: none;             }
+  74%        { color: #330000; opacity: .0;  transform: translateX(12px); }
+  74.3%      { color: #9b1a1a; opacity: 1;   transform: none;             }
+  74.6%      { color: #550000; opacity: .3;  transform: translateX(-6px); }
+  75%        { color: #cc1111; opacity: 1;   transform: translateX(3px);  }
+  75.4%      { color: #9b1a1a; opacity: 1;   transform: none;             }
+  75.7%      { color: #6b0000; opacity: .1;  transform: none;             }
+  76%        { color: #9b1a1a; opacity: 1;   transform: none;             }
 }
 
-@keyframes ronovaGlitchRed {
-  0%   { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  5%   { transform: translateX(4px);  clip-path: inset(5% 0 55% 0); }
-  6%   { transform: translateX(-3px); clip-path: inset(0 0 70% 0); }
-  7%   { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  35%  { transform: translateX(0);   clip-path: inset(10% 0 50% 0); }
-  36%  { transform: translateX(7px);  clip-path: inset(0% 0 65% 0); }
-  37%  { transform: translateX(-5px); clip-path: inset(15% 0 45% 0); }
-  38%  { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  62%  { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  63%  { transform: translateX(10px); clip-path: inset(5% 0 58% 0); }
-  64%  { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  86%  { transform: translateX(-6px); clip-path: inset(2% 0 62% 0); }
-  87%  { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
-  100% { transform: translateX(0);   clip-path: inset(0 0 60% 0); }
+/* Slice A — top chunk displaced right during events */
+@keyframes ronovaNameSliceA {
+  0%,  100% { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+
+  10%        { clip-path: inset(0 0 55% 0);   transform: translateX(7px);  }
+  10.5%      { clip-path: inset(5% 0 60% 0);  transform: translateX(-5px); }
+  11%        { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+
+  38%        { clip-path: inset(0 0 70% 0);   transform: translateX(-9px); }
+  38.5%      { clip-path: inset(10% 0 50% 0); transform: translateX(6px);  }
+  39%        { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+
+  74%        { clip-path: inset(0 0 60% 0);   transform: translateX(13px); }
+  74.3%      { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  74.6%      { clip-path: inset(5% 0 65% 0);  transform: translateX(-7px); }
+  75%        { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  75.7%      { clip-path: inset(0 0 72% 0);   transform: translateX(4px);  }
+  76%        { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
 }
 
-@keyframes ronovaGlitchCyan {
-  0%   { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
-  4%   { transform: translateX(-4px); clip-path: inset(40% 0 25% 0); }
-  5%   { transform: translateX(3px);  clip-path: inset(50% 0 15% 0); }
-  6%   { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
-  36%  { transform: translateX(0);    clip-path: inset(42% 0 22% 0); }
-  37%  { transform: translateX(-8px); clip-path: inset(35% 0 30% 0); }
-  38%  { transform: translateX(5px);  clip-path: inset(48% 0 18% 0); }
-  39%  { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
-  63%  { transform: translateX(-11px);clip-path: inset(43% 0 24% 0); }
-  64%  { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
-  86%  { transform: translateX(6px);  clip-path: inset(47% 0 19% 0); }
-  87%  { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
-  100% { transform: translateX(0);    clip-path: inset(45% 0 20% 0); }
+/* Slice B — bottom chunk displaced left during events */
+@keyframes ronovaNameSliceB {
+  0%,  100% { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+
+  10%        { clip-path: inset(55% 0 10% 0); transform: translateX(-6px); }
+  10.5%      { clip-path: inset(60% 0 5% 0);  transform: translateX(4px);  }
+  11%        { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+  11.5%      { clip-path: inset(70% 0 0 0);   transform: translateX(-3px); }
+  12%        { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+
+  38%        { clip-path: inset(60% 0 8% 0);  transform: translateX(10px); }
+  38.5%      { clip-path: inset(50% 0 15% 0); transform: translateX(-8px); }
+  39%        { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+  39.5%      { clip-path: inset(65% 0 0 0);   transform: translateX(5px);  }
+
+  74%        { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+  74.3%      { clip-path: inset(55% 0 12% 0); transform: translateX(14px); }
+  74.6%      { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+  75%        { clip-path: inset(60% 0 8% 0);  transform: translateX(-10px);}
+  75.4%      { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
+  75.7%      { clip-path: inset(70% 0 2% 0);  transform: translateX(6px);  }
+  76%        { clip-path: inset(100% 0 0 0);  transform: translateX(0);    }
 }
 
 /* ── PICTURE GLITCH ── */
 .shadeArtWrapGlitch {
-  animation: ronovaArtShake 4s steps(1) infinite;
+  animation: ronovaArtCorrupt 6s steps(1) infinite;
 }
 
-/* Red-channel overlay — image shifted right */
+/* Dark red bleed — no color-channel nonsense, just displacement blocks */
 .shadeArtGlitchR {
   position: absolute;
   inset: 0;
   z-index: 3;
-  background: inherit;
-  mix-blend-mode: screen;
-  background-color: rgba(255,0,40,.18);
-  animation: ronovaArtRedSlice 3.2s steps(1) infinite;
+  background-color: rgba(80,0,0,.35);
+  mix-blend-mode: multiply;
   clip-path: inset(0 0 100% 0);
+  animation: ronovaArtSliceR 6s steps(1) infinite;
   pointer-events: none;
 }
 
-/* Blue-channel overlay */
+/* Blackout slice — pure darkness cut across the image */
 .shadeArtGlitchB {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  mix-blend-mode: screen;
-  background-color: rgba(0,200,255,.12);
-  animation: ronovaArtCyanSlice 2.4s steps(1) infinite;
+  z-index: 4;
+  background-color: #000;
   clip-path: inset(100% 0 0 0);
+  animation: ronovaArtSliceDark 6s steps(1) infinite;
   pointer-events: none;
 }
 
-@keyframes ronovaArtShake {
-  0%,100% { transform: none; filter: none; }
-  4%  { transform: translate(3px, 0);  filter: hue-rotate(5deg) saturate(1.4); }
-  5%  { transform: translate(-2px, 1px); filter: contrast(1.6) brightness(1.1); }
-  6%  { transform: none; filter: none; }
-  33% { transform: none; filter: none; }
-  34% { transform: translate(-5px, 0); filter: hue-rotate(-10deg) saturate(2) brightness(.9); }
-  35% { transform: translate(4px, -1px); filter: contrast(2) brightness(1.2) hue-rotate(5deg); }
-  36% { transform: none; filter: none; }
-  60% { transform: none; filter: none; }
-  61% { transform: translate(6px, 2px);  filter: hue-rotate(15deg) saturate(2.5) brightness(.8); }
-  62% { transform: translate(-4px, -1px); filter: contrast(1.8); }
-  63% { transform: none; filter: none; }
-  85% { transform: none; filter: none; }
-  86% { transform: translate(-3px, 0); filter: hue-rotate(-5deg) brightness(1.3); }
-  87% { transform: none; filter: none; }
+@keyframes ronovaArtCorrupt {
+  0%,  100% { transform: none;             filter: none;                              }
+  10%        { transform: translateX(5px);  filter: contrast(1.3) brightness(.7);      }
+  10.5%      { transform: translateX(-3px); filter: contrast(1.5) brightness(.6) saturate(0); }
+  11%        { transform: none;             filter: none;                              }
+  11.5%      { transform: translateX(2px);  filter: brightness(.8);                   }
+  12%        { transform: none;             filter: none;                              }
+
+  38%        { transform: translateX(-7px); filter: contrast(2) brightness(.5) saturate(0); }
+  38.5%      { transform: translateX(4px);  filter: contrast(1.4) brightness(.9);      }
+  39%        { transform: none;             filter: none;                              }
+
+  74%        { transform: translateX(10px); filter: brightness(.3) saturate(0);        }
+  74.3%      { transform: none;             filter: brightness(.9);                    }
+  74.6%      { transform: translateX(-6px); filter: contrast(1.8) brightness(.5);      }
+  75%        { transform: translateX(3px);  filter: none;                              }
+  75.4%      { transform: none;             filter: none;                              }
+  75.7%      { transform: translateX(-2px); filter: brightness(.7) saturate(0);        }
+  76%        { transform: none;             filter: none;                              }
 }
 
-@keyframes ronovaArtRedSlice {
-  0%,100% { clip-path: inset(0 0 100% 0); transform: translateX(0); }
-  4%  { clip-path: inset(10% 0 72% 0); transform: translateX(6px);  }
-  5%  { clip-path: inset(5% 0 80% 0);  transform: translateX(-3px); }
-  6%  { clip-path: inset(0 0 100% 0);  transform: translateX(0); }
-  34% { clip-path: inset(60% 0 20% 0); transform: translateX(8px);  }
-  35% { clip-path: inset(55% 0 30% 0); transform: translateX(-6px); }
-  36% { clip-path: inset(0 0 100% 0);  transform: translateX(0); }
-  61% { clip-path: inset(30% 0 40% 0); transform: translateX(10px); }
-  62% { clip-path: inset(25% 0 50% 0); transform: translateX(-8px); }
-  63% { clip-path: inset(0 0 100% 0);  transform: translateX(0); }
-  86% { clip-path: inset(70% 0 10% 0); transform: translateX(-5px); }
-  87% { clip-path: inset(0 0 100% 0);  transform: translateX(0); }
+@keyframes ronovaArtSliceR {
+  0%,  100% { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  10%        { clip-path: inset(8% 0 65% 0);  transform: translateX(6px);  }
+  10.5%      { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  38%        { clip-path: inset(55% 0 15% 0); transform: translateX(-8px); }
+  38.5%      { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  74%        { clip-path: inset(20% 0 50% 0); transform: translateX(11px); }
+  74.3%      { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
+  75%        { clip-path: inset(60% 0 10% 0); transform: translateX(-5px); }
+  75.4%      { clip-path: inset(0 0 100% 0);  transform: translateX(0);    }
 }
 
-@keyframes ronovaArtCyanSlice {
-  0%,100% { clip-path: inset(100% 0 0 0); transform: translateX(0); }
-  5%  { clip-path: inset(75% 0 8% 0);  transform: translateX(-5px); }
-  6%  { clip-path: inset(100% 0 0 0);  transform: translateX(0); }
-  35% { clip-path: inset(15% 0 68% 0); transform: translateX(7px); }
-  36% { clip-path: inset(100% 0 0 0);  transform: translateX(0); }
-  62% { clip-path: inset(50% 0 35% 0); transform: translateX(-9px); }
-  63% { clip-path: inset(100% 0 0 0);  transform: translateX(0); }
-  87% { clip-path: inset(80% 0 5% 0);  transform: translateX(4px); }
-  88% { clip-path: inset(100% 0 0 0);  transform: translateX(0); }
+@keyframes ronovaArtSliceDark {
+  0%,  100% { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  10%        { clip-path: inset(0 0 100% 0);   opacity: 1; } /* flash black */
+  10.3%      { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  11.5%      { clip-path: inset(70% 0 15% 0);  opacity: .7; }
+  12%        { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  38%        { clip-path: inset(0 0 85% 0);    opacity: .5; }
+  38.5%      { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  74%        { clip-path: inset(0 0 100% 0);   opacity: 1; } /* full blackout frame */
+  74.15%     { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  74.6%      { clip-path: inset(45% 0 40% 0);  opacity: .8; }
+  75%        { clip-path: inset(100% 0 0 0);   opacity: 1; }
+  75.7%      { clip-path: inset(0 0 90% 0);    opacity: .6; }
+  76%        { clip-path: inset(100% 0 0 0);   opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shadeBandNameGlitch { animation: none; color: #ff2244 !important; }
+  .shadeBandNameGlitch { animation: none; color: #9b1a1a !important; }
   .shadeBandNameGlitch::before,
   .shadeBandNameGlitch::after { display: none; }
-  .shadeArtWrapGlitch { animation: none; }
+  .shadeArtWrapGlitch { animation: none; filter: none; }
   .shadeArtGlitchR, .shadeArtGlitchB { display: none; }
 }
