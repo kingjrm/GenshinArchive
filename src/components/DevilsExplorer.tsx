@@ -112,72 +112,114 @@ function DossierArtwork({ file }: { file: Devil }) {
 
 // ── Shades Panel ────────────────────────────────────────────────────────────
 
-function ShadesArtwork({ file }: { file: Devil }) {
-  const [failed, setFailed] = useState(false);
-  const available = !!file.artwork && !failed;
+function ShadeBand({ file, index, total }: { file: Devil; index: number; total: number }) {
   const color = shadeColors[file.id] ?? "#8b6be8";
   const glyph = shadeGlyphs[file.id] ?? "✦";
-  return (
-    <div className={styles.shadeArtBox} style={{ "--shade-color": color } as React.CSSProperties}>
-      {available ? (
-        <Image
-          src={file.artwork!}
-          alt={file.name}
-          fill
-          sizes="280px"
-          onError={() => setFailed(true)}
-          style={{ objectFit: "contain" }}
-        />
-      ) : (
-        <span className={styles.shadeGlyph}>{glyph}</span>
-      )}
-    </div>
-  );
-}
-
-function ShadeCard({ file, index }: { file: Devil; index: number }) {
-  const color = shadeColors[file.id] ?? "#8b6be8";
   const details = shadeDetails[file.id];
-  const [redRevealed, setRedRevealed] = useState(false);
+  const [revealed, setRevealed] = useState(false);
+  const [artFailed, setArtFailed] = useState(false);
+  const isEven = index % 2 === 0;
+  const num = String(index + 1).padStart(2, "0");
+
   return (
     <article
-      className={styles.shadeCard}
-      style={
-        {
-          "--shade-color": color,
-          "--shade-delay": `${index * 0.12}s`,
-        } as React.CSSProperties
-      }
-      data-shade-card
+      className={[styles.shadeBand, isEven ? styles.shadeBandEven : styles.shadeBandOdd].join(" ")}
+      style={{ "--shade-color": color, "--shade-index": index, "--shade-delay": `${index * 0.18}s` } as React.CSSProperties}
     >
-      <div className={styles.shadeCardInner}>
-        <ShadesArtwork file={file} />
-        <div className={styles.shadeCopy}>
-          <div className={styles.shadeId}>{file.id}</div>
-          <h3 className={styles.shadeName}>{file.name}</h3>
-          <div className={styles.shadeJp}>{file.japanese}</div>
+      {/* Domain watermark */}
+      <div className={styles.shadeDomainWm} aria-hidden="true">
+        {details?.domain ?? "UNKNOWN"}
+      </div>
+
+      {/* Number stamp */}
+      <div className={styles.shadeNumStamp} aria-hidden="true">{num}</div>
+
+      {/* Scan line */}
+      <div className={styles.shadeScan} aria-hidden="true" />
+
+      {/* Animated energy border */}
+      <div className={styles.shadeEnergyBorder} aria-hidden="true" />
+
+      {/* Orbital rings */}
+      <div className={styles.shadeOrbitWrap} aria-hidden="true">
+        <div className={styles.shadeOrbit1} />
+        <div className={styles.shadeOrbit2} />
+        <div className={styles.shadeOrbit3} />
+        <div className={styles.shadeOrbitDot} />
+      </div>
+
+      {/* Noise overlay */}
+      <div className={styles.shadeNoise} aria-hidden="true" />
+
+      {/* Content */}
+      <div className={[styles.shadeBandContent, isEven ? styles.shadeBandContentEven : styles.shadeBandContentOdd].join(" ")}>
+        {/* LEFT: identity block */}
+        <div className={styles.shadeIdentity}>
+          <div className={styles.shadeFileTag}>{file.id} · {file.subcategory ?? "ENTITY"}</div>
+
+          {/* Glyph or artwork */}
+          <div className={styles.shadeSymbolBlock}>
+            {!!file.artwork && !artFailed ? (
+              <div className={styles.shadeArtWrap}>
+                <Image src={file.artwork!} alt={file.name} fill sizes="260px" onError={() => setArtFailed(true)} style={{ objectFit: "contain" }} />
+              </div>
+            ) : (
+              <div className={styles.shadeSymbolGlyph}>{glyph}</div>
+            )}
+            <div className={styles.shadeSymbolRing} />
+          </div>
+
+          <h3 className={styles.shadeBandName}>{file.name}</h3>
+          <div className={styles.shadeBandJp}>{file.japanese}</div>
+        </div>
+
+        {/* RIGHT: data block */}
+        <div className={styles.shadeData}>
+          {/* Top meta strip */}
+          <div className={styles.shadeMetaStrip}>
+            <div className={styles.shadeMetaItem}>
+              <span>DOMAIN</span>
+              <strong>{details?.domain ?? "UNKNOWN"}</strong>
+            </div>
+            <div className={styles.shadeMetaDivider} />
+            <div className={styles.shadeMetaItem}>
+              <span>ERA</span>
+              <strong>{details?.era ?? "UNKNOWN"}</strong>
+            </div>
+            <div className={styles.shadeMetaDivider} />
+            <div className={styles.shadeMetaItem}>
+              <span>STATUS</span>
+              <strong className={details?.status.startsWith("ACTIVE") ? styles.statusActive : styles.statusUnknown}>
+                {details?.status ?? "UNKNOWN"}
+              </strong>
+            </div>
+            <div className={styles.shadeMetaDivider} />
+            <div className={styles.shadeMetaItem}>
+              <span>RECORD</span>
+              <strong>{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</strong>
+            </div>
+          </div>
+
+          {/* Lore text */}
           {details && (
-            <>
-              <dl className={styles.shadeMeta}>
-                <dt>DOMAIN</dt>
-                <dd>{details.domain}</dd>
-                <dt>ERA</dt>
-                <dd>{details.era}</dd>
-                <dt>STATUS</dt>
-                <dd className={details.status.startsWith("ACTIVE") ? styles.statusActive : styles.statusUnknown}>
-                  {details.status}
-                </dd>
-              </dl>
-              <p className={styles.shadeLore}>{details.lore}</p>
-            </>
+            <p className={styles.shadeBandLore}>{details.lore}</p>
           )}
+
+          {/* Description */}
+          <p className={styles.shadeBandDesc}>{file.description}</p>
+
+          {/* Classified block */}
           {file.redacted && (
-            <div className={styles.shadeRedact}>
-              <span className={styles.shadeRedactLabel}>CLASSIFIED</span>
+            <div className={styles.shadeClassified}>
+              <div className={styles.shadeClassifiedHeader}>
+                <span className={styles.shadeClassifiedDot} />
+                <span>EYES ONLY — TAP TO {revealed ? "CONCEAL" : "DECRYPT"}</span>
+                <span className={styles.shadeClassifiedDot} />
+              </div>
               <button
-                className={"red " + (redRevealed ? "revealed" : "") + " " + styles.shadeRedactBtn}
-                onClick={() => setRedRevealed(!redRevealed)}
-                aria-pressed={redRevealed}
+                className={[styles.shadeClassifiedText, revealed ? styles.shadeClassifiedRevealed : ""].join(" ")}
+                onClick={() => setRevealed(!revealed)}
+                aria-pressed={revealed}
               >
                 {file.redacted}
               </button>
@@ -185,60 +227,71 @@ function ShadeCard({ file, index }: { file: Devil; index: number }) {
           )}
         </div>
       </div>
-      <div className={styles.shadeCardBorder} aria-hidden="true" />
     </article>
   );
 }
 
 function ShadesPanel() {
   const shades = SHADE_IDS.map((id) => devils.find((d) => d.id === id)).filter(Boolean) as Devil[];
-  const headerRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className={styles.shadesPanel}>
-      {/* cosmic background */}
-      <div className={styles.cosmicBg} aria-hidden="true">
-        <div className={styles.cosmicRing1} />
-        <div className={styles.cosmicRing2} />
-        <div className={styles.cosmicRing3} />
-        {Array.from({ length: 28 }).map((_, i) => (
+      {/* Deep space starfield background */}
+      <div className={styles.starfield} aria-hidden="true">
+        {Array.from({ length: 60 }).map((_, i) => (
           <span
             key={i}
-            className={styles.cosmicDot}
-            style={
-              {
-                "--dx": `${Math.random() * 100}%`,
-                "--dy": `${Math.random() * 100}%`,
-                "--ds": `${0.5 + Math.random() * 1.5}px`,
-                "--dd": `${Math.random() * 6}s`,
-              } as React.CSSProperties
-            }
+            className={styles.star}
+            style={{
+              left: `${(i * 37.3 + 11) % 100}%`,
+              top: `${(i * 61.8 + 7) % 100}%`,
+              width: `${1 + (i % 3)}px`,
+              height: `${1 + (i % 3)}px`,
+              animationDelay: `${(i * 0.23) % 5}s`,
+              animationDuration: `${3 + (i % 4)}s`,
+            } as React.CSSProperties}
           />
         ))}
       </div>
 
-      {/* header */}
-      <header className={styles.shadesHeader} ref={headerRef}>
-        <div className={styles.shadesEyebrow}>CELESTIA / RESTRICTED RECORD / CLASS ABSOLUTE</div>
-        <h2 className={styles.shadesTitle}>The Four Shades</h2>
-        <div className={styles.shadesSubtitle}>四つの影の天理</div>
+      {/* Cinematic header */}
+      <header className={styles.shadesHeader}>
+        <div className={styles.shadesHeaderBg} aria-hidden="true" />
+        <div className={styles.shadesEyebrow}>
+          <span className={styles.shadesEyebrowLine} />
+          CELESTIA / CLASS ABSOLUTE / EYES ONLY
+          <span className={styles.shadesEyebrowLine} />
+        </div>
+        <h2 className={styles.shadesTitle}>
+          <span className={styles.shadesTitleGhost} aria-hidden="true">SHADES</span>
+          The Four Shades
+        </h2>
+        <div className={styles.shadesSubtitle}>四つの影の天理 — Heavenly Principles · Four Agents · Unknown Era</div>
         <p className={styles.shadesIntro}>
           Before the Archon War, before the Seven, before any nation raised a god to its throne — four entities
-          governed the fundamental laws of Teyvat on behalf of the Heavenly Principles. This record is incomplete.
-          It may never be complete.
+          governed the fundamental laws of Teyvat on behalf of the Heavenly Principles.
+          <em className={styles.shadesIntroEm}> This record is incomplete. It may never be complete.</em>
         </p>
-        <div className={styles.shadesRule} />
+        <div className={styles.shadesHeaderRule}>
+          <div className={styles.shadesHeaderRuleLine} />
+          <div className={styles.shadesHeaderRuleDiamond}>✦</div>
+          <div className={styles.shadesHeaderRuleLine} />
+        </div>
       </header>
 
-      {/* cards */}
-      <div className={styles.shadesGrid}>
+      {/* Shade bands */}
+      <div className={styles.shadesList}>
         {shades.map((shade, i) => (
-          <ShadeCard key={shade.id} file={shade} index={i} />
+          <ShadeBand key={shade.id} file={shade} index={i} total={shades.length} />
         ))}
       </div>
 
       <div className={styles.shadesFootnote}>
-        Archive classification: ABSOLUTE · Source verification: PARTIAL · Completeness: UNCONFIRMED
+        <span>ARCHIVE CLASSIFICATION: ABSOLUTE</span>
+        <span>·</span>
+        <span>SOURCE VERIFICATION: PARTIAL</span>
+        <span>·</span>
+        <span>COMPLETENESS: UNCONFIRMED</span>
       </div>
     </div>
   );
