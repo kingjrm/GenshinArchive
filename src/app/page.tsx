@@ -27,8 +27,8 @@ export default function HomePage() {
     <section className="part p1">
       <div className="part-inner">
         <figure className="part-artwork" data-home-art>
-          <CharacterArtwork name="Lumine" src="/images/characters/lumine.png" fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
-          <figcaption>FIG. 01 / LUMINE</figcaption>
+          <CharacterArtwork name="Ineffa" src="/images/characters/ineffa.png" fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
+          <figcaption>FIG. 01 / INEFFA</figcaption>
         </figure>
         <div className="part-copy">
           <span className="part-kicker" data-home-reveal>01 / THE TRAVELER'S JOURNEY · MONDSTADT TO NATLAN</span>
@@ -51,7 +51,7 @@ export default function HomePage() {
         </div>
         <figure className="part-artwork" data-home-art>
           <CharacterArtwork name="Aether" src="/images/characters/arlecchino.png" fadeIn immediateFallback sizes="(max-width: 760px) 90vw, 38vw" />
-          <figcaption>FIG. 02 / AETHER</figcaption>
+          <figcaption>FIG. 02 / ARLECCHINO</figcaption>
         </figure>
       </div>
     </section>
@@ -68,7 +68,7 @@ export default function HomePage() {
           </div>
         </div>
         <figure className="end-artwork" data-home-art>
-          <CharacterArtwork name="Paimon" src="/images/characters/asmoday.jpg" fadeIn immediateFallback sizes="(max-width: 760px) 85vw, 33vw" />
+          <CharacterArtwork name="ASMODAY" src="/images/characters/asmoday.jpg" fadeIn immediateFallback sizes="(max-width: 760px) 85vw, 33vw" />
           <figcaption>THE JOURNEY CONTINUES / 00</figcaption>
         </figure>
       </div>
