@@ -124,6 +124,10 @@ export function LocationsExplorer() {
         const related = arcs.map((arc, arcIndex) => ({ arc, arcIndex })).filter(({ arc }) => arc.locations.split(", ").some((name) => (locationAliases[name] ?? name) === location.name));
         const isKhaenriah = location.name === "Khaenri'ah";
         return <article key={location.name} className={[styles.panel, "loc", isKhaenriah ? styles.glitch : ""].join(" ")} data-glitch={isKhaenriah ? "" : undefined} style={colorStyle(location.color)} aria-label={String(index + 1).padStart(2, "0") + " " + location.name}>
+          {isKhaenriah && <>
+            <div className={styles.glitchBlock1} aria-hidden="true"><Image src={location.image ?? "/images/placeholders/artwork.png"} alt="" fill sizes="(max-width: 760px) 90vw, 86vw" /></div>
+            <div className={styles.glitchBlock2} aria-hidden="true"><Image src={location.image ?? "/images/placeholders/artwork.png"} alt="" fill sizes="(max-width: 760px) 90vw, 86vw" /></div>
+          </>}
           <div className={styles.image} data-location-image><Image src={location.image ?? "/images/placeholders/artwork.png"} alt={location.image ? location.name + " environment" : location.name + " environment artwork pending"} fill sizes="(max-width: 760px) 90vw, 86vw" priority={index === 0} loading={index === 0 ? "eager" : "lazy"} /></div>
           <div className={styles.topline}><span>WORLD FILE / {String(index + 1).padStart(2, "0")}</span><span className="j">{location.japanese}</span><span className={styles.pending}>{location.image ? "ARCHIVE LOCATION" : "ENVIRONMENT ARTWORK PENDING"}</span></div>
           <div className={styles.body}>
