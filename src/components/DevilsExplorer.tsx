@@ -119,6 +119,7 @@ function ShadeBand({ file, index, total }: { file: Devil; index: number; total: 
   const [revealed, setRevealed] = useState(false);
   const [artFailed, setArtFailed] = useState(false);
   const isEven = index % 2 === 0;
+  const isRonova = file.id === "TE-006";
   const num = String(index + 1).padStart(2, "0");
 
   return (
@@ -160,16 +161,24 @@ function ShadeBand({ file, index, total }: { file: Devil; index: number; total: 
           {/* Glyph or artwork */}
           <div className={styles.shadeSymbolBlock}>
             {!!file.artwork && !artFailed ? (
-              <div className={styles.shadeArtWrap}>
-                <Image src={file.artwork!} alt={file.name} fill sizes="260px" onError={() => setArtFailed(true)} style={{ objectFit: "contain" }} />
+              <div className={[styles.shadeArtWrap, isRonova ? styles.shadeArtWrapGlitch : ""].join(" ")}>
+                <div className={styles.shadeArtOverlay} aria-hidden="true" />
+                {isRonova && <div className={styles.shadeArtGlitchR} aria-hidden="true" />}
+                {isRonova && <div className={styles.shadeArtGlitchB} aria-hidden="true" />}
+                <Image src={file.artwork!} alt={file.name} fill sizes="(max-width:760px) 80vw, 320px" onError={() => setArtFailed(true)} />
               </div>
             ) : (
               <div className={styles.shadeSymbolGlyph}>{glyph}</div>
             )}
-            <div className={styles.shadeSymbolRing} />
+            {(!file.artwork || artFailed) && <div className={styles.shadeSymbolRing} />}
           </div>
 
-          <h3 className={styles.shadeBandName}>{file.name}</h3>
+          <h3
+            className={[styles.shadeBandName, isRonova ? styles.shadeBandNameGlitch : ""].join(" ")}
+            data-text={file.name}
+          >
+            {file.name}
+          </h3>
           <div className={styles.shadeBandJp}>{file.japanese}</div>
         </div>
 
