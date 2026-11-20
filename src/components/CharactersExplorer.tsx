@@ -63,7 +63,7 @@ export function CharactersExplorer() {
   };
   return <>
     <PageHeading title="Region" accent="Cast" japanese="人物">
-      <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Region">{regions.map((value) => <button key={value} type="button" className={region === value ? styles.activePart : ""} aria-pressed={region === value} onClick={() => { setRegion(value); const first = characters.find((item) => item.region === value); if (first) { setSelectedId(first.id); selectCharacter(first.id); } }}>{value}<small>{characters.find((item) => item.region === value)?.quest ?? "Regional figures"}</small></button>)}</div>
+      <div className={`${styles.parts} page-parts`} data-heading-detail role="group" aria-label="Region">{regions.map((value) => <button key={value} type="button" className={region === value ? styles.activePart : ""} aria-pressed={region === value} onClick={() => { setRegion(value); const priority = archonPriority[value] ?? []; const regionChars = characters.filter((item) => item.region === value).sort((a, b) => { const ai = priority.indexOf(a.id); const bi = priority.indexOf(b.id); if (ai >= 0 || bi >= 0) { if (ai < 0) return 1; if (bi < 0) return -1; return ai - bi; } return characters.indexOf(a) - characters.indexOf(b); }); const first = regionChars[0]; if (first) { setSelectedId(first.id); selectCharacter(first.id); } }}>{value}<small>{characters.find((item) => item.region === value)?.quest ?? "Regional figures"}</small></button>)}</div>
     </PageHeading>
     <div className={styles.explorer} style={colorStyle(selected.color === "#111111" ? "#F0EEE8" : selected.color)}>
       <div className={styles.selectorHead}>
