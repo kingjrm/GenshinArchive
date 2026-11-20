@@ -152,13 +152,9 @@ export default function LorePage() {
 
           return (
             <div key={section.title} className="lore-section">
-              <div className="lore-section-header">
-                <div className="lore-section-label">
-                  <span className="lore-section-num">{section.japanese}</span>
-                  <span className="lore-section-tag">CONNECTION FILE</span>
-                </div>
-                <h2 className="lore-section-title">{section.title}</h2>
-                <p className="lore-section-intro">{section.intro}</p>
+              <div className="lr-head">
+                <span>{section.title}</span>
+                <span>{section.japanese}</span>
               </div>
 
               {sectionConnections.map((conn) => (

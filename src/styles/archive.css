@@ -340,42 +340,42 @@ display:contents}
 
 /* Override .lr div grid for the header — must be more specific */
 .lr .lore-section-header{
-display:block;
-grid-template-columns:none;
-border-top:1px solid #3a3632;
-border-bottom:none;
-padding:4vh 0 0.5vh}
-
-.lr .lore-section-label{
 display:flex;
 align-items:center;
-gap:12px;
-margin-bottom:4px}
+gap:16px;
+grid-template-columns:none;
+padding:2.5vh 0 0;
+border-top:1px solid #3a3632;
+border-bottom:none;
+margin-top:2vh}
+
+.lr .lore-section-label{
+display:contents}
 
 .lr .lore-section-title{
-font:700 11px/1 var(--m);
-letter-spacing:.2em;
+font:700 10px/1 var(--m);
+letter-spacing:.22em;
 color:var(--w);
 text-transform:uppercase;
-margin:0}
+margin:0;
+white-space:nowrap}
 
 .lr .lore-section-num{
-font:11px/1 var(--m);
+font:10px/1 var(--m);
 letter-spacing:.12em;
 color:var(--o);
-opacity:.5}
+opacity:.45;
+white-space:nowrap}
 
 .lr .lore-section-tag{
 font:9px/1 var(--m);
-letter-spacing:.2em;
-color:var(--r)}
+letter-spacing:.18em;
+color:var(--r);
+white-space:nowrap}
 
+/* hide intro — too much vertical space */
 .lr .lore-section-intro{
-font:11px/1.6 var(--m);
-letter-spacing:.04em;
-color:rgba(240,238,232,.38);
-max-width:70ch;
-margin-top:4px}
+display:none}
 
 .lr div{
 display:grid;
