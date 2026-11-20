@@ -3,7 +3,7 @@ import type { Character } from "../types/archive";
 type RegionRoster = readonly [region: string, quest: string, names: readonly string[]];
 
 const roster: readonly RegionRoster[] = [
-  ["Mondstadt", "Song of the Dragon and Freedom", ["Albedo","Amber","Barbara","Bennett","Dahlia","Diluc","Diona","Durin","Eula","Fischl","Jean","Kaeya","Klee","Lisa","Lohen","Mika","Mona","Nicole","Noelle","Prune","Razor","Rosaria","Sucrose","Varka","Venti","Lumine","Aether","Paimon"]],
+  ["Mondstadt", "Song of the Dragon and Freedom", ["Venti","Albedo","Amber","Barbara","Bennett","Dahlia","Diluc","Diona","Durin","Eula","Fischl","Jean","Kaeya","Klee","Lisa","Lohen","Mika","Mona","Nicole","Noelle","Prune","Razor","Rosaria","Sucrose","Varka","Lumine","Aether","Paimon"]],
   ["Liyue", "Farewell, the Archaic Lord", ["Baizhu","Beidou","Chongyun","Gaming","Ganyu","Hu Tao","Keqing","Lan Yan","Ningguang","Qiqi","Shenhe","Xiangling","Xianyun","Xiao","Xingqiu","Xinyan","Yanfei","Yaoyao","Yelan","Yun Jin","Zhongli","Zibai"]],
   ["Inazuma", "Omnipresence Over Mortals", ["Arataki Itto","Gorou","Kaedehara Kazuha","Kamisato Ayaka","Kamisato Ayato","Kirara","Kujou Sara","Kuki Shinobu","Raiden Shogun","Sangonomiya Kokomi","Sayu","Shikanoin Heizou","Thoma","Yae Miko","Yoimiya","Yumemizuki Mizuki"]],
   ["Sumeru", "Akasha Pulses, the Kalpa Flame Rises", ["Alhaitham","Candace","Collei","Cyno","Dehya","Dori","Faruzan","Kaveh","Layla","Nahida","Nilou","Sethos","Tighnari","Wanderer"]],
