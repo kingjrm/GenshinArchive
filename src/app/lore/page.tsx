@@ -151,12 +151,13 @@ export default function LorePage() {
           if (sectionConnections.length === 0) return null;
 
           return (
-            <section key={section.title} className="lore-section">
+            <div key={section.title} className="lore-section">
               <div className="lore-section-header">
-                <h2 className="lore-section-title">
-                  {section.title}
-                  <span className="lore-section-japanese">{section.japanese}</span>
-                </h2>
+                <div className="lore-section-label">
+                  <span className="lore-section-num">{section.japanese}</span>
+                  <span className="lore-section-tag">CONNECTION FILE</span>
+                </div>
+                <h2 className="lore-section-title">{section.title}</h2>
                 <p className="lore-section-intro">{section.intro}</p>
               </div>
 
@@ -174,7 +175,7 @@ export default function LorePage() {
                   </ProfileButton>
                 </div>
               ))}
-            </section>
+            </div>
           );
         })}
       </div>
