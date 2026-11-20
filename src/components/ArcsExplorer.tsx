@@ -93,7 +93,7 @@ export function ArcsExplorer() {
             })}</p></div>
             <div><h3>KEY THREAT</h3><p>{devilIndex >= 0 ? <TransitionLink href="/classified-files" onClick={() => setDevil(devilIndex)}>{selected.antagonist}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : selected.antagonist}</p></div>
             <div><h3>KEY LOCATIONS</h3><p>{keyLocations.map((name, index) => <span key={name}>{index > 0 && <span className={styles.separator}> / </span>}{knownLocations.includes(locationAliases[name] ?? name) ? <TransitionLink href="/locations">{name}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink> : name}</span>)}</p></div>
-            <div><h3>NATION INDEX</h3><p><TransitionLink href="/volumes" onClick={() => setVolume(Math.max(1, locations.findIndex((location) => location.name === selected.locations.split(", ")[0]) + 1))}>{selected.locations.split(", ")[0]}<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></p></div>
+            <div><h3>LORE COMPENDIUM</h3><p><TransitionLink href="/lore">{selected.volumes} · Regional Connections<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink>{" "}<TransitionLink href="/volumes" onClick={() => setVolume(Math.max(1, locations.findIndex((location) => location.name === selected.locations.split(", ")[0]) + 1))}>Nation Chronicle<ArrowUpRight size={13} aria-hidden="true" /></TransitionLink></p></div>
           </div>
         </div>
       </div>
