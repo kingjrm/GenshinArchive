@@ -331,20 +331,22 @@ clip-path:none}
 /* lore */
 .lr{
 padding:2vh 5vw 10vh;
-display:grid;
+display:flex;
+flex-direction:column;
 gap:0}
 
 .lore-section{
-display:contents}
+display:flex;
+flex-direction:column}
 
 /* ── section label — single compact line ── */
 .lr-head{
 display:flex;
 align-items:center;
 gap:16px;
-padding:3vh 0 0;
-border-top:1px solid rgba(255,255,255,.07);
-margin-top:1.5vh}
+padding:3vh 0 1vh;
+border-top:2px solid rgba(255,255,255,.12);
+margin-top:3vh}
 
 .lr-head span:first-child{
 font:700 10px/1 var(--m);
@@ -358,14 +360,14 @@ letter-spacing:.12em;
 color:var(--o);
 opacity:.45}
 
-/* ── connection rows — scoped to .rv only ── */
+/* ── connection rows ── */
 .lr .rv{
 display:grid;
 grid-template-columns:1fr auto 1fr;
 gap:3vw;
 align-items:center;
 padding:3vh 0;
-border-top:2px solid var(--g)}
+border-top:1px solid rgba(255,255,255,.07)}
 
 .lr .a{
 font-size:clamp(30px,6vw,84px);
